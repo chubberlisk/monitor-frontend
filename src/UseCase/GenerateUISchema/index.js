@@ -73,9 +73,6 @@ export default class GenerateUISchema {
   generateSchemaForItem(item) {
     let schema = {}
 
-    if(item.extendedText) {
-      schema["ui:widget"] = "textarea"
-    }
 
     if (item.hidden) {
       schema["ui:widget"] = "hidden"

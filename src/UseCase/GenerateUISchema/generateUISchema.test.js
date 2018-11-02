@@ -756,28 +756,6 @@ describe("GenerateUISchema", () => {
     });
   });
 
-  describe("With extended text fields", () => {
-    describe("In an object", () => {
-      it("Marks the field as a textarea", () => {
-        let schema = {
-          type: "object",
-          properties: {
-            a: {
-              type: "object",
-              properties: {
-                b: { type: "string", extendedText: true }
-              }
-            }
-          }
-        };
-        let response = useCase.execute(schema);
-        expect(response).toEqual({
-          a: { b: { "ui:widget": "textarea" } }
-        });
-      });
-    });
-  });
-
   describe("With hidden fields", () => {
     describe("In an object", () => {
       describe("Example one", () => {
