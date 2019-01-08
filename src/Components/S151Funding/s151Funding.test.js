@@ -105,31 +105,31 @@ describe("s151 Funding", () => {
 
           it("Renders the baseline 1 field correctly", () => {
             expect(field.find("[data-test='baseline1']").text()).toEqual(
-              "1234"
+              "£1234"
             );
           });
 
           it("Renders the baseline 2 field correctly", () => {
             expect(field.find("[data-test='baseline2']").text()).toEqual(
-              "5678"
+              "£5678"
             );
           });
 
           it("Renders the baseline 3 field correctly", () => {
             expect(field.find("[data-test='baseline3']").text()).toEqual(
-              "9101"
+              "£9101"
             );
           });
 
           it("Renders the baseline 4 field correctly", () => {
             expect(field.find("[data-test='baseline4']").text()).toEqual(
-              "4312"
+              "£4312"
             );
           });
 
           it("Renders the total field correctly", () => {
             expect(field.find("[data-test='total']").text()).toEqual(
-              "12356789"
+              "£12356789"
             );
           });
         });
@@ -140,24 +140,24 @@ describe("s151 Funding", () => {
           });
 
           it("Renders the variance 1 field correctly", () => {
-            expect(field.find("[data-test='variance1']").text()).toEqual("321");
+            expect(field.find("[data-test='variance1']").text()).toEqual("£321");
           });
 
           it("Renders the variance 2 field correctly", () => {
-            expect(field.find("[data-test='variance2']").text()).toEqual("322");
+            expect(field.find("[data-test='variance2']").text()).toEqual("£322");
           });
 
           it("Renders the variance 3 field correctly", () => {
-            expect(field.find("[data-test='variance3']").text()).toEqual("323");
+            expect(field.find("[data-test='variance3']").text()).toEqual("£323");
           });
 
           it("Renders the variance 4 field correctly", () => {
-            expect(field.find("[data-test='variance4']").text()).toEqual("324");
+            expect(field.find("[data-test='variance4']").text()).toEqual("£324");
           });
 
           it("Renders the total field correctly", () => {
             expect(field.find("[data-test='varianceTotal']").text()).toEqual(
-              "1290"
+              "£1290"
             );
           });
         });
@@ -168,24 +168,24 @@ describe("s151 Funding", () => {
           });
 
           it("Renders the movement 1 field correctly", () => {
-            expect(field.find("[data-test='movement1']").text()).toEqual("1");
+            expect(field.find("[data-test='movement1']").text()).toEqual("£1");
           });
 
           it("Renders the movement 2 field correctly", () => {
-            expect(field.find("[data-test='movement2']").text()).toEqual("2");
+            expect(field.find("[data-test='movement2']").text()).toEqual("£2");
           });
 
           it("Renders the movement 3 field correctly", () => {
-            expect(field.find("[data-test='movement3']").text()).toEqual("3");
+            expect(field.find("[data-test='movement3']").text()).toEqual("£3");
           });
 
           it("Renders the movement 4 field correctly", () => {
-            expect(field.find("[data-test='movement4']").text()).toEqual("4");
+            expect(field.find("[data-test='movement4']").text()).toEqual("£4");
           });
 
           it("Renders the total field correctly", () => {
             expect(field.find("[data-test='movementTotal']").text()).toEqual(
-              "10"
+              "£10"
             );
           });
         });
@@ -199,31 +199,31 @@ describe("s151 Funding", () => {
 
           it("Renders the movement variance 1 field correctly", () => {
             expect(field.find("[data-test='movementVar1']").text()).toEqual(
-              "4"
+              "£4"
             );
           });
 
           it("Renders the movement variance 2 field correctly", () => {
             expect(field.find("[data-test='movementVar2']").text()).toEqual(
-              "3"
+              "£3"
             );
           });
 
           it("Renders the movement variance 3 field correctly", () => {
             expect(field.find("[data-test='movementVar3']").text()).toEqual(
-              "2"
+              "£2"
             );
           });
 
           it("Renders the movement variance 4 field correctly", () => {
             expect(field.find("[data-test='movementVar4']").text()).toEqual(
-              "1"
+              "£1"
             );
           });
 
           it("Renders the total field correctly", () => {
             expect(field.find("[data-test='movementVarTotal']").text()).toEqual(
-              "10"
+              "£10"
             );
           });
         });
@@ -329,31 +329,31 @@ describe("s151 Funding", () => {
 
           it("Renders the baseline 1 field correctly", () => {
             expect(field.find("[data-test='baseline1']").text()).toEqual(
-              "4312"
+              "£4312"
             );
           });
 
           it("Renders the baseline 2 field correctly", () => {
             expect(field.find("[data-test='baseline2']").text()).toEqual(
-              "9101"
+              "£9101"
             );
           });
 
           it("Renders the baseline 3 field correctly", () => {
             expect(field.find("[data-test='baseline3']").text()).toEqual(
-              "5678"
+              "£5678"
             );
           });
 
           it("Renders the baseline 4 field correctly", () => {
             expect(field.find("[data-test='baseline4']").text()).toEqual(
-              "1234"
+              "£1234"
             );
           });
 
           it("Renders the total field correctly", () => {
             expect(field.find("[data-test='total']").text()).toEqual(
-              "12356789"
+              "£12356789"
             );
           });
         });
@@ -364,24 +364,24 @@ describe("s151 Funding", () => {
           });
 
           it("Renders the variance 1 field correctly", () => {
-            expect(field.find("[data-test='variance1']").text()).toEqual("324");
+            expect(field.find("[data-test='variance1']").text()).toEqual("£324");
           });
 
           it("Renders the variance 2 field correctly", () => {
-            expect(field.find("[data-test='variance2']").text()).toEqual("323");
+            expect(field.find("[data-test='variance2']").text()).toEqual("£323");
           });
 
           it("Renders the variance 3 field correctly", () => {
-            expect(field.find("[data-test='variance3']").text()).toEqual("322");
+            expect(field.find("[data-test='variance3']").text()).toEqual("£322");
           });
 
           it("Renders the variance 4 field correctly", () => {
-            expect(field.find("[data-test='variance4']").text()).toEqual("321");
+            expect(field.find("[data-test='variance4']").text()).toEqual("£321");
           });
 
           it("Renders the total field correctly", () => {
             expect(field.find("[data-test='varianceTotal']").text()).toEqual(
-              "1290"
+              "£1290"
             );
           });
         });
@@ -392,24 +392,24 @@ describe("s151 Funding", () => {
           });
 
           it("Renders the movement 1 field correctly", () => {
-            expect(field.find("[data-test='movement1']").text()).toEqual("4");
+            expect(field.find("[data-test='movement1']").text()).toEqual("£4");
           });
 
           it("Renders the movement 2 field correctly", () => {
-            expect(field.find("[data-test='movement2']").text()).toEqual("3");
+            expect(field.find("[data-test='movement2']").text()).toEqual("£3");
           });
 
           it("Renders the movement 3 field correctly", () => {
-            expect(field.find("[data-test='movement3']").text()).toEqual("2");
+            expect(field.find("[data-test='movement3']").text()).toEqual("£2");
           });
 
           it("Renders the movement 4 field correctly", () => {
-            expect(field.find("[data-test='movement4']").text()).toEqual("1");
+            expect(field.find("[data-test='movement4']").text()).toEqual("£1");
           });
 
           it("Renders the total field correctly", () => {
             expect(field.find("[data-test='movementTotal']").text()).toEqual(
-              "10"
+              "£10"
             );
           });
         });
@@ -423,31 +423,31 @@ describe("s151 Funding", () => {
 
           it("Renders the movement variance 1 field correctly", () => {
             expect(field.find("[data-test='movementVar1']").text()).toEqual(
-              "1"
+              "£1"
             );
           });
 
           it("Renders the movement variance 2 field correctly", () => {
             expect(field.find("[data-test='movementVar2']").text()).toEqual(
-              "2"
+              "£2"
             );
           });
 
           it("Renders the movement variance 3 field correctly", () => {
             expect(field.find("[data-test='movementVar3']").text()).toEqual(
-              "3"
+              "£3"
             );
           });
 
           it("Renders the movement variance 4 field correctly", () => {
             expect(field.find("[data-test='movementVar4']").text()).toEqual(
-              "4"
+              "£4"
             );
           });
 
           it("Renders the total field correctly", () => {
             expect(field.find("[data-test='movementVarTotal']").text()).toEqual(
-              "10"
+              "£10"
             );
           });
         });
@@ -551,31 +551,31 @@ describe("s151 Funding", () => {
 
           it("Renders the baseline 1 field correctly", () => {
             expect(field.find("[data-test='baseline1']").text()).toEqual(
-              "1234"
+              "£1234"
             );
           });
 
           it("Renders the baseline 2 field correctly", () => {
             expect(field.find("[data-test='baseline2']").text()).toEqual(
-              "5678"
+              "£5678"
             );
           });
 
           it("Renders the baseline 3 field correctly", () => {
             expect(field.find("[data-test='baseline3']").text()).toEqual(
-              "9101"
+              "£9101"
             );
           });
 
           it("Renders the baseline 4 field correctly", () => {
             expect(field.find("[data-test='baseline4']").text()).toEqual(
-              "4312"
+              "£4312"
             );
           });
 
           it("Renders the total field correctly", () => {
             expect(field.find("[data-test='total']").text()).toEqual(
-              "12356789"
+              "£12356789"
             );
           });
         });
@@ -703,31 +703,31 @@ describe("s151 Funding", () => {
 
           it("Renders the baseline 1 field correctly", () => {
             expect(field.find("[data-test='baseline1']").text()).toEqual(
-              "4312"
+              "£4312"
             );
           });
 
           it("Renders the baseline 2 field correctly", () => {
             expect(field.find("[data-test='baseline2']").text()).toEqual(
-              "9101"
+              "£9101"
             );
           });
 
           it("Renders the baseline 3 field correctly", () => {
             expect(field.find("[data-test='baseline3']").text()).toEqual(
-              "5678"
+              "£5678"
             );
           });
 
           it("Renders the baseline 4 field correctly", () => {
             expect(field.find("[data-test='baseline4']").text()).toEqual(
-              "1234"
+              "£1234"
             );
           });
 
           it("Renders the total field correctly", () => {
             expect(field.find("[data-test='total']").text()).toEqual(
-              "12356789"
+              "£12356789"
             );
           });
         });
@@ -739,31 +739,31 @@ describe("s151 Funding", () => {
 
           it("Renders the variance 1 field correctly", () => {
             expect(field.find("[data-test='variance1']").text()).toEqual(
-              "324"
+              "£324"
             );
           });
 
           it("Renders the variance 2 field correctly", () => {
             expect(field.find("[data-test='variance2']").text()).toEqual(
-              "323"
+              "£323"
             );
           });
 
           it("Renders the variance 3 field correctly", () => {
             expect(field.find("[data-test='variance3']").text()).toEqual(
-              "322"
+              "£322"
             );
           });
 
           it("Renders the variance 4 field correctly", () => {
             expect(field.find("[data-test='variance4']").text()).toEqual(
-              "321"
+              "£321"
             );
           });
 
           it("Renders the total field correctly", () => {
             expect(field.find("[data-test='varianceTotal']").text()).toEqual(
-              "1290"
+              "£1290"
             );
           });
         });
@@ -776,24 +776,24 @@ describe("s151 Funding", () => {
           });
 
           it("Renders the movement 1 field correctly", () => {
-            expect(field.find("[data-test='movement1']").text()).toEqual("4");
+            expect(field.find("[data-test='movement1']").text()).toEqual("£4");
           });
 
           it("Renders the movement 2 field correctly", () => {
-            expect(field.find("[data-test='movement2']").text()).toEqual("3");
+            expect(field.find("[data-test='movement2']").text()).toEqual("£3");
           });
 
           it("Renders the movement 3 field correctly", () => {
-            expect(field.find("[data-test='movement3']").text()).toEqual("2");
+            expect(field.find("[data-test='movement3']").text()).toEqual("£2");
           });
 
           it("Renders the movement 4 field correctly", () => {
-            expect(field.find("[data-test='movement4']").text()).toEqual("1");
+            expect(field.find("[data-test='movement4']").text()).toEqual("£1");
           });
 
           it("Renders the total field correctly", () => {
             expect(field.find("[data-test='movementTotal']").text()).toEqual(
-              "10"
+              "£10"
             );
           });
         });
@@ -807,32 +807,32 @@ describe("s151 Funding", () => {
 
           it("Renders the movement variance 1 field correctly", () => {
             expect(field.find("[data-test='movementVar1']").text()).toEqual(
-              "1"
+              "£1"
             );
           });
 
           it("Renders the movement variance 2 field correctly", () => {
             expect(field.find("[data-test='movementVar2']").text()).toEqual(
-              "2"
+              "£2"
             );
           });
 
           it("Renders the movement variance 3 field correctly", () => {
             expect(field.find("[data-test='movementVar3']").text()).toEqual(
-              "3"
+              "£3"
             );
           });
 
           it("Renders the movement variance 4 field correctly", () => {
             expect(field.find("[data-test='movementVar4']").text()).toEqual(
-              "4"
+              "£4"
             );
           });
 
           it("Renders the total field correctly", () => {
             expect(
               field.find("[data-test='movementVarTotal']").text()
-            ).toEqual("10");
+            ).toEqual("£10");
           });
         });
       });
