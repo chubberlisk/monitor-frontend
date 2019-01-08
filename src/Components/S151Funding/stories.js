@@ -44,6 +44,27 @@ let formData = [
     movementVariance3: "2",
     movementVariance4: "1"
   }
-]
+];
 
-storiesOf("S151Funding", module).add("Default", () => <S151Funding formData={formData}/>);
+let noVariance = [
+  {
+    period: "2018/19",
+    instalment1: "1234",
+    instalment2: "5678",
+    instalment3: "9101",
+    instalment4: "4312",
+    baselineVariance1: "",
+    baselineVariance2: "",
+    baselineVariance3: "",
+    baselineVariance4: "",
+    total: "12356789",
+    lastMovement1: null,
+    lastMovement2: null,
+    lastMovement3: null,
+    lastMovement4: null
+  }
+];
+
+storiesOf("S151Funding", module)
+  .add("Default", () => <S151Funding formData={formData} />)
+  .add("No Variance", () => <S151Funding formData={noVariance} />);

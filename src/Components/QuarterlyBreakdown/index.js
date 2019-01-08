@@ -148,7 +148,6 @@ export default class QuarterlyBreakdown extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     let quarterlyObject = this.props.schema.items.properties;
     if(this.props.schema.addable) {
       quarterlyObject.remove = { title: "Remove", type: "string" };

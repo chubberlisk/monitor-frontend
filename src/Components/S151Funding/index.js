@@ -1,4 +1,5 @@
 import React from "react";
+import "./style.css";
 
 export default class S151Funding extends React.Component {
   constructor(props) {
@@ -31,72 +32,102 @@ export default class S151Funding extends React.Component {
   };
 
   renderVariance = index => {
-    return (
-      <div className="row" data-test={`variance-${index}`}>
-        <div className="col-md-2" />
-        <div className="col-md-2" data-test={`variance1-${index}`}>
-          {this.props.formData[index].baselineVariance1}
+    if (this.isVariance(index)) {
+      return (
+        <div className="row" data-test={`variance-${index}`}>
+          <div className="col-md-2" />
+          <div className="col-md-2" data-test={`variance1-${index}`}>
+            {this.props.formData[index].baselineVariance1}
+          </div>
+          <div className="col-md-2" data-test={`variance2-${index}`}>
+            {this.props.formData[index].baselineVariance2}
+          </div>
+          <div className="col-md-2" data-test={`variance3-${index}`}>
+            {this.props.formData[index].baselineVariance3}
+          </div>
+          <div className="col-md-2" data-test={`variance4-${index}`}>
+            {this.props.formData[index].baselineVariance4}
+          </div>
+          <div className="col-md-2" data-test={`varianceTotal-${index}`}>
+            {this.calculateVarianceTotal(index)}
+          </div>
         </div>
-        <div className="col-md-2" data-test={`variance2-${index}`}>
-          {this.props.formData[index].baselineVariance2}
-        </div>
-        <div className="col-md-2" data-test={`variance3-${index}`}>
-          {this.props.formData[index].baselineVariance3}
-        </div>
-        <div className="col-md-2" data-test={`variance4-${index}`}>
-          {this.props.formData[index].baselineVariance4}
-        </div>
-        <div className="col-md-2" data-test={`varianceTotal-${index}`}>
-          {this.calculateVarianceTotal(index)}
-        </div>
-      </div>
-    );
+      );
+    }
+  };
+
+  isVariance = index => {
+    if (isNaN(this.calculateVarianceTotal(index))) {
+      return false;
+    } else {
+      return true;
+    }
   };
 
   renderMovement = index => {
-    return (
-      <div className="row" data-test={`lastMovement-${index}`}>
-        <div className="col-md-2" />
-        <div className="col-md-2" data-test={`movement1-${index}`}>
-          {this.props.formData[index].lastMovement1}
+    if (this.isMovement(index)) {
+      return (
+        <div className="row" data-test={`lastMovement-${index}`}>
+          <div className="col-md-2" />
+          <div className="col-md-2" data-test={`movement1-${index}`}>
+            {this.props.formData[index].lastMovement1}
+          </div>
+          <div className="col-md-2" data-test={`movement2-${index}`}>
+            {this.props.formData[index].lastMovement2}
+          </div>
+          <div className="col-md-2" data-test={`movement3-${index}`}>
+            {this.props.formData[index].lastMovement3}
+          </div>
+          <div className="col-md-2" data-test={`movement4-${index}`}>
+            {this.props.formData[index].lastMovement4}
+          </div>
+          <div className="col-md-2" data-test={`movementTotal-${index}`}>
+            {this.calculateMovementTotal(index)}
+          </div>
         </div>
-        <div className="col-md-2" data-test={`movement2-${index}`}>
-          {this.props.formData[index].lastMovement2}
-        </div>
-        <div className="col-md-2" data-test={`movement3-${index}`}>
-          {this.props.formData[index].lastMovement3}
-        </div>
-        <div className="col-md-2" data-test={`movement4-${index}`}>
-          {this.props.formData[index].lastMovement4}
-        </div>
-        <div className="col-md-2" data-test={`movementTotal-${index}`}>
-          {this.calculateMovementTotal(index)}
-        </div>
-      </div>
-    );
+      );
+    }
+  };
+
+  isMovement = index => {
+    if (isNaN(this.calculateMovementTotal(index))) {
+      return false;
+    } else {
+      return true;
+    }
   };
 
   renderMovementVariance = index => {
-    return (
-      <div className="row" data-test={`movementVariance-${index}`}>
-        <div className="col-md-2" />
-        <div className="col-md-2" data-test={`movementVar1-${index}`}>
-          {this.props.formData[index].movementVariance1}
+    if (this.isMovementVariance(index)) {
+      return (
+        <div className="row" data-test={`movementVariance-${index}`}>
+          <div className="col-md-2" />
+          <div className="col-md-2" data-test={`movementVar1-${index}`}>
+            {this.props.formData[index].movementVariance1}
+          </div>
+          <div className="col-md-2" data-test={`movementVar2-${index}`}>
+            {this.props.formData[index].movementVariance2}
+          </div>
+          <div className="col-md-2" data-test={`movementVar3-${index}`}>
+            {this.props.formData[index].movementVariance3}
+          </div>
+          <div className="col-md-2" data-test={`movementVar4-${index}`}>
+            {this.props.formData[index].movementVariance4}
+          </div>
+          <div className="col-md-2" data-test={`movementVarTotal-${index}`}>
+            {this.calculateMovementVarianceTotal(index)}
+          </div>
         </div>
-        <div className="col-md-2" data-test={`movementVar2-${index}`}>
-          {this.props.formData[index].movementVariance2}
-        </div>
-        <div className="col-md-2" data-test={`movementVar3-${index}`}>
-          {this.props.formData[index].movementVariance3}
-        </div>
-        <div className="col-md-2" data-test={`movementVar4-${index}`}>
-          {this.props.formData[index].movementVariance4}
-        </div>
-        <div className="col-md-2" data-test={`movementVarTotal-${index}`}>
-          {this.calculateMovementVarianceTotal(index)}
-        </div>
-      </div>
-    );
+      );
+    }
+  };
+
+  isMovementVariance = index => {
+    if (isNaN(this.calculateMovementVarianceTotal(index))) {
+      return false;
+    } else {
+      return true;
+    }
   };
 
   calculateVarianceTotal = index => {
@@ -144,7 +175,7 @@ export default class S151Funding extends React.Component {
     let result = [];
     for (let index = 0; index < arrayLength; index++) {
       result.push(
-        <div key={index}>
+        <div key={index} className="padding-bottom">
           {this.renderBaseline(index)}
           {this.renderVariance(index)}
           {this.renderMovement(index)}
