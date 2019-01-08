@@ -13,19 +13,19 @@ export default class S151Funding extends React.Component {
           {this.props.formData.period}
         </div>
         <div className="col-md-2" data-test="baseline1">
-          £{this.props.formData.instalment1}
+          £{this.insertCommas(this.props.formData.instalment1)}
         </div>
         <div className="col-md-2" data-test="baseline2">
-          £{this.props.formData.instalment2}
+          £{this.insertCommas(this.props.formData.instalment2)}
         </div>
         <div className="col-md-2" data-test="baseline3">
-          £{this.props.formData.instalment3}
+          £{this.insertCommas(this.props.formData.instalment3)}
         </div>
         <div className="col-md-2" data-test="baseline4">
-          £{this.props.formData.instalment4}
+          £{this.insertCommas(this.props.formData.instalment4)}
         </div>
         <div className="col-md-2" data-test="total">
-          £{this.props.formData.total}
+          £{this.insertCommas(this.props.formData.total)}
         </div>
       </div>
     );
@@ -37,19 +37,19 @@ export default class S151Funding extends React.Component {
         <div className="row" data-test="variance">
           <div className="col-md-2" />
           <div className="col-md-2" data-test="variance1">
-            £{this.props.formData.baselineVariance1}
+            £{this.insertCommas(this.props.formData.baselineVariance1)}
           </div>
           <div className="col-md-2" data-test="variance2">
-            £{this.props.formData.baselineVariance2}
+            £{this.insertCommas(this.props.formData.baselineVariance2)}
           </div>
           <div className="col-md-2" data-test="variance3">
-            £{this.props.formData.baselineVariance3}
+            £{this.insertCommas(this.props.formData.baselineVariance3)}
           </div>
           <div className="col-md-2" data-test="variance4">
-            £{this.props.formData.baselineVariance4}
+            £{this.insertCommas(this.props.formData.baselineVariance4)}
           </div>
           <div className="col-md-2" data-test="varianceTotal">
-            £{this.calculateVarianceTotal()}
+            £{this.insertCommas(this.calculateVarianceTotal())}
           </div>
         </div>
       );
@@ -70,19 +70,19 @@ export default class S151Funding extends React.Component {
         <div className="row" data-test="lastMovement">
           <div className="col-md-2" />
           <div className="col-md-2" data-test="movement1">
-            £{this.props.formData.lastMovement1}
+            £{this.insertCommas(this.props.formData.lastMovement1)}
           </div>
           <div className="col-md-2" data-test="movement2">
-            £{this.props.formData.lastMovement2}
+            £{this.insertCommas(this.props.formData.lastMovement2)}
           </div>
           <div className="col-md-2" data-test="movement3">
-            £{this.props.formData.lastMovement3}
+            £{this.insertCommas(this.props.formData.lastMovement3)}
           </div>
           <div className="col-md-2" data-test="movement4">
-            £{this.props.formData.lastMovement4}
+            £{this.insertCommas(this.props.formData.lastMovement4)}
           </div>
           <div className="col-md-2" data-test="movementTotal">
-            £{this.calculateMovementTotal()}
+            £{this.insertCommas(this.calculateMovementTotal())}
           </div>
         </div>
       );
@@ -103,19 +103,19 @@ export default class S151Funding extends React.Component {
         <div className="row" data-test="movementVariance">
           <div className="col-md-2" />
           <div className="col-md-2" data-test="movementVar1">
-            £{this.props.formData.movementVariance1}
+            £{this.insertCommas(this.props.formData.movementVariance1)}
           </div>
           <div className="col-md-2" data-test="movementVar2">
-            £{this.props.formData.movementVariance2}
+            £{this.insertCommas(this.props.formData.movementVariance2)}
           </div>
           <div className="col-md-2" data-test="movementVar3">
-            £{this.props.formData.movementVariance3}
+            £{this.insertCommas(this.props.formData.movementVariance3)}
           </div>
           <div className="col-md-2" data-test="movementVar4">
-            £{this.props.formData.movementVariance4}
+            £{this.insertCommas(this.props.formData.movementVariance4)}
           </div>
           <div className="col-md-2" data-test="movementVarTotal">
-            £{this.calculateMovementVarianceTotal()}
+            £{this.insertCommas(this.calculateMovementVarianceTotal())}
           </div>
         </div>
       );
@@ -131,31 +131,35 @@ export default class S151Funding extends React.Component {
   };
 
   calculateVarianceTotal = () => {
-    return (
+    let total =
       parseInt(this.props.formData.baselineVariance1) +
       parseInt(this.props.formData.baselineVariance2) +
       parseInt(this.props.formData.baselineVariance3) +
-      parseInt(this.props.formData.baselineVariance4)
-    );
+      parseInt(this.props.formData.baselineVariance4);
+    return total.toString();
   };
 
   calculateMovementTotal = () => {
-    return (
+    let total =
       parseInt(this.props.formData.lastMovement1) +
       parseInt(this.props.formData.lastMovement2) +
       parseInt(this.props.formData.lastMovement3) +
-      parseInt(this.props.formData.lastMovement4)
-    );
+      parseInt(this.props.formData.lastMovement4);
+    return total.toString();
   };
 
   calculateMovementVarianceTotal = () => {
-    return (
+    let total =
       parseInt(this.props.formData.movementVariance1) +
       parseInt(this.props.formData.movementVariance2) +
       parseInt(this.props.formData.movementVariance3) +
-      parseInt(this.props.formData.movementVariance4)
-    );
+      parseInt(this.props.formData.movementVariance4);
+    return total.toString();
   };
+
+  insertCommas = value => {
+    return value.replace(/\B(?=(\d{3})+(?!\d))/g, digits => digits + ",");
+  }
 
   renderHeader = () => {
     return (
@@ -171,7 +175,6 @@ export default class S151Funding extends React.Component {
   };
 
   render = () => {
-    console.log(this.props.formData);
     return (
       <div>
         {this.renderHeader()}

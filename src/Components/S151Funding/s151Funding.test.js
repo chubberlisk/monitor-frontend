@@ -6,65 +6,6 @@ describe("s151 Funding", () => {
   describe("1 item", () => {
     describe("With Variance", () => {
       describe("Example 1", () => {
-        let schema = {
-          type: "array",
-          title: "Data",
-          items: {
-            type: "object",
-            properties: {
-              period: {
-                title: "Year",
-                type: "string",
-                readonly: true
-              },
-              instalment1: {
-                title: "1st Instalment",
-                type: "string",
-                readonly: true
-              },
-              instalment2: {
-                title: "2nd Instalment",
-                type: "string",
-                readonly: true
-              },
-              instalment3: {
-                title: "3rd Instalment",
-                type: "string",
-                readonly: true
-              },
-              instalment4: {
-                title: "4th Instalment",
-                type: "string",
-                readonly: true
-              },
-              total: {
-                title: "Total",
-                type: "string",
-                readonly: true
-              },
-              baselineVariance1: {
-                title: "1st Instalment",
-                type: "string",
-                readonly: true
-              },
-              baselineVariance2: {
-                title: "2nd Instalment",
-                type: "string",
-                readonly: true
-              },
-              baselineVariance3: {
-                title: "3rd Instalment",
-                type: "string",
-                readonly: true
-              },
-              baselineVariance4: {
-                title: "4th Instalment",
-                type: "string",
-                readonly: true
-              }
-            }
-          }
-        };
         let formData = {
           period: "2018/19",
           instalment1: "1234",
@@ -105,31 +46,31 @@ describe("s151 Funding", () => {
 
           it("Renders the baseline 1 field correctly", () => {
             expect(field.find("[data-test='baseline1']").text()).toEqual(
-              "£1234"
+              "£1,234"
             );
           });
 
           it("Renders the baseline 2 field correctly", () => {
             expect(field.find("[data-test='baseline2']").text()).toEqual(
-              "£5678"
+              "£5,678"
             );
           });
 
           it("Renders the baseline 3 field correctly", () => {
             expect(field.find("[data-test='baseline3']").text()).toEqual(
-              "£9101"
+              "£9,101"
             );
           });
 
           it("Renders the baseline 4 field correctly", () => {
             expect(field.find("[data-test='baseline4']").text()).toEqual(
-              "£4312"
+              "£4,312"
             );
           });
 
           it("Renders the total field correctly", () => {
             expect(field.find("[data-test='total']").text()).toEqual(
-              "£12356789"
+              "£12,356,789"
             );
           });
         });
@@ -157,7 +98,7 @@ describe("s151 Funding", () => {
 
           it("Renders the total field correctly", () => {
             expect(field.find("[data-test='varianceTotal']").text()).toEqual(
-              "£1290"
+              "£1,290"
             );
           });
         });
@@ -230,65 +171,6 @@ describe("s151 Funding", () => {
       });
 
       describe("Example 2", () => {
-        let schema = {
-          type: "array",
-          title: "Data",
-          items: {
-            type: "object",
-            properties: {
-              period: {
-                title: "Year",
-                type: "string",
-                readonly: true
-              },
-              instalment1: {
-                title: "1st Instalment",
-                type: "string",
-                readonly: true
-              },
-              instalment2: {
-                title: "2nd Instalment",
-                type: "string",
-                readonly: true
-              },
-              instalment3: {
-                title: "3rd Instalment",
-                type: "string",
-                readonly: true
-              },
-              instalment4: {
-                title: "4th Instalment",
-                type: "string",
-                readonly: true
-              },
-              total: {
-                title: "Total",
-                type: "string",
-                readonly: true
-              },
-              baselineVariance1: {
-                title: "1st Instalment",
-                type: "string",
-                readonly: true
-              },
-              baselineVariance2: {
-                title: "2nd Instalment",
-                type: "string",
-                readonly: true
-              },
-              baselineVariance3: {
-                title: "3rd Instalment",
-                type: "string",
-                readonly: true
-              },
-              baselineVariance4: {
-                title: "4th Instalment",
-                type: "string",
-                readonly: true
-              }
-            }
-          }
-        };
         let formData = {
           period: "2017/18",
           instalment4: "1234",
@@ -329,31 +211,31 @@ describe("s151 Funding", () => {
 
           it("Renders the baseline 1 field correctly", () => {
             expect(field.find("[data-test='baseline1']").text()).toEqual(
-              "£4312"
+              "£4,312"
             );
           });
 
           it("Renders the baseline 2 field correctly", () => {
             expect(field.find("[data-test='baseline2']").text()).toEqual(
-              "£9101"
+              "£9,101"
             );
           });
 
           it("Renders the baseline 3 field correctly", () => {
             expect(field.find("[data-test='baseline3']").text()).toEqual(
-              "£5678"
+              "£5,678"
             );
           });
 
           it("Renders the baseline 4 field correctly", () => {
             expect(field.find("[data-test='baseline4']").text()).toEqual(
-              "£1234"
+              "£1,234"
             );
           });
 
           it("Renders the total field correctly", () => {
             expect(field.find("[data-test='total']").text()).toEqual(
-              "£12356789"
+              "£12,356,789"
             );
           });
         });
@@ -381,7 +263,7 @@ describe("s151 Funding", () => {
 
           it("Renders the total field correctly", () => {
             expect(field.find("[data-test='varianceTotal']").text()).toEqual(
-              "£1290"
+              "£1,290"
             );
           });
         });
@@ -456,65 +338,6 @@ describe("s151 Funding", () => {
 
     describe("Without Variance", () => {
       describe("Example 1", () => {
-        let schema = {
-          type: "array",
-          title: "Data",
-          items: {
-            type: "object",
-            properties: {
-              period: {
-                title: "Year",
-                type: "string",
-                readonly: true
-              },
-              instalment1: {
-                title: "1st Instalment",
-                type: "string",
-                readonly: true
-              },
-              instalment2: {
-                title: "2nd Instalment",
-                type: "string",
-                readonly: true
-              },
-              instalment3: {
-                title: "3rd Instalment",
-                type: "string",
-                readonly: true
-              },
-              instalment4: {
-                title: "4th Instalment",
-                type: "string",
-                readonly: true
-              },
-              total: {
-                title: "Total",
-                type: "string",
-                readonly: true
-              },
-              baselineVariance1: {
-                title: "1st Instalment",
-                type: "string",
-                readonly: true
-              },
-              baselineVariance2: {
-                title: "2nd Instalment",
-                type: "string",
-                readonly: true
-              },
-              baselineVariance3: {
-                title: "3rd Instalment",
-                type: "string",
-                readonly: true
-              },
-              baselineVariance4: {
-                title: "4th Instalment",
-                type: "string",
-                readonly: true
-              }
-            }
-          }
-        };
         let formData = {
           period: "2018/19",
           instalment1: "1234",
@@ -551,31 +374,31 @@ describe("s151 Funding", () => {
 
           it("Renders the baseline 1 field correctly", () => {
             expect(field.find("[data-test='baseline1']").text()).toEqual(
-              "£1234"
+              "£1,234"
             );
           });
 
           it("Renders the baseline 2 field correctly", () => {
             expect(field.find("[data-test='baseline2']").text()).toEqual(
-              "£5678"
+              "£5,678"
             );
           });
 
           it("Renders the baseline 3 field correctly", () => {
             expect(field.find("[data-test='baseline3']").text()).toEqual(
-              "£9101"
+              "£9,101"
             );
           });
 
           it("Renders the baseline 4 field correctly", () => {
             expect(field.find("[data-test='baseline4']").text()).toEqual(
-              "£4312"
+              "£4,312"
             );
           });
 
           it("Renders the total field correctly", () => {
             expect(field.find("[data-test='total']").text()).toEqual(
-              "£12356789"
+              "£12,356,789"
             );
           });
         });
@@ -604,65 +427,6 @@ describe("s151 Funding", () => {
       });
 
       describe("Example 2", () => {
-        let schema = {
-          type: "array",
-          title: "Data",
-          items: {
-            type: "object",
-            properties: {
-              period: {
-                title: "Year",
-                type: "string",
-                readonly: true
-              },
-              instalment1: {
-                title: "1st Instalment",
-                type: "string",
-                readonly: true
-              },
-              instalment2: {
-                title: "2nd Instalment",
-                type: "string",
-                readonly: true
-              },
-              instalment3: {
-                title: "3rd Instalment",
-                type: "string",
-                readonly: true
-              },
-              instalment4: {
-                title: "4th Instalment",
-                type: "string",
-                readonly: true
-              },
-              total: {
-                title: "Total",
-                type: "string",
-                readonly: true
-              },
-              baselineVariance1: {
-                title: "1st Instalment",
-                type: "string",
-                readonly: true
-              },
-              baselineVariance2: {
-                title: "2nd Instalment",
-                type: "string",
-                readonly: true
-              },
-              baselineVariance3: {
-                title: "3rd Instalment",
-                type: "string",
-                readonly: true
-              },
-              baselineVariance4: {
-                title: "4th Instalment",
-                type: "string",
-                readonly: true
-              }
-            }
-          }
-        };
         let formData = {
           period: "2017/18",
           instalment4: "1234",
@@ -703,31 +467,31 @@ describe("s151 Funding", () => {
 
           it("Renders the baseline 1 field correctly", () => {
             expect(field.find("[data-test='baseline1']").text()).toEqual(
-              "£4312"
+              "£4,312"
             );
           });
 
           it("Renders the baseline 2 field correctly", () => {
             expect(field.find("[data-test='baseline2']").text()).toEqual(
-              "£9101"
+              "£9,101"
             );
           });
 
           it("Renders the baseline 3 field correctly", () => {
             expect(field.find("[data-test='baseline3']").text()).toEqual(
-              "£5678"
+              "£5,678"
             );
           });
 
           it("Renders the baseline 4 field correctly", () => {
             expect(field.find("[data-test='baseline4']").text()).toEqual(
-              "£1234"
+              "£1,234"
             );
           });
 
           it("Renders the total field correctly", () => {
             expect(field.find("[data-test='total']").text()).toEqual(
-              "£12356789"
+              "£12,356,789"
             );
           });
         });
@@ -763,7 +527,7 @@ describe("s151 Funding", () => {
 
           it("Renders the total field correctly", () => {
             expect(field.find("[data-test='varianceTotal']").text()).toEqual(
-              "£1290"
+              "£1,290"
             );
           });
         });
