@@ -141,9 +141,10 @@ export default class S151Funding extends React.Component {
 
   renderBody = () => {
     let arrayLength = this.props.formData.length;
+    let result = [];
     for (let index = 0; index < arrayLength; index++) {
-      return (
-        <div>
+      result.push(
+        <div key={index}>
           {this.renderBaseline(index)}
           {this.renderVariance(index)}
           {this.renderMovement(index)}
@@ -151,6 +152,7 @@ export default class S151Funding extends React.Component {
         </div>
       );
     }
+    return result;
   };
 
   render = () => {
