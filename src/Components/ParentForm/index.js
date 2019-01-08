@@ -14,6 +14,7 @@ import StaticData from "../StaticData";
 import PeriodsField from "../PeriodsField";
 import NumberedArrayField from "../NumberedArrayField";
 import QuarterlyBreakdown from "../QuarterlyBreakdown";
+import S151Funding from "../S151Funding";
 import CurrencyWidget from "../CurrencyWidget";
 import PercentageWidget from "../PercentageWidget";
 import BritishDate from "../BritishDate";
@@ -253,6 +254,7 @@ export default class ParentForm extends React.Component {
       milestone: MilestoneField,
       numbered: NumberedArrayField,
       quarterly: QuarterlyBreakdown,
+      s151Funding: S151Funding,
       calculated: CalculatedField,
       validated: ValidatedField,
       uploadFile: UploadFileField

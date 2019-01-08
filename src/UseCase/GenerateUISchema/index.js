@@ -63,9 +63,11 @@ export default class GenerateUISchema {
     } else if (value.periods) {
       ret["ui:field"] = "periods";
     } else if (value.items.milestone) {
-      ret["items"]["ui:field"] = "milestone"
+      ret["items"]["ui:field"] = "milestone";
     } else if (value.quarterly) {
       ret["ui:field"] = "quarterly";
+    } else if (value.items.s151Funding) {
+      ret["items"]["ui:field"] = "s151Funding";
     }
 
     if (value.numbered) {
@@ -90,62 +92,72 @@ export default class GenerateUISchema {
     return dependencies.oneOf.reduce(reducer, {});
   }
 
+<<<<<<< HEAD
   generateSchemaForProperties(item, role, noOfPreviousReturns) {
     let schema = {}
+=======
+  generateSchemaForItem(item, role) {
+    let schema = {};
+>>>>>>> Remove array information to match formData structure from backend
 
     if (item.extendedText) {
-      schema["ui:widget"] = "textarea"
+      schema["ui:widget"] = "textarea";
     }
 
     if (item.format === "date") {
-      schema["ui:widget"] = "britishDate"
+      schema["ui:widget"] = "britishDate";
     }
 
     if (item.percentage) {
-      schema["ui:widget"] = "percentage"
+      schema["ui:widget"] = "percentage";
     }
 
     if (item.hidden) {
-      schema["ui:widget"] = "hidden"
+      schema["ui:widget"] = "hidden";
     }
 
     if (item.uploadFile) {
-      schema["ui:field"] = "uploadFile"
+      schema["ui:field"] = "uploadFile";
     }
 
+<<<<<<< HEAD
     if (item.readonly === true) {
       schema["ui:disabled"] = true
     }
 
     if (item.readonly_after_return <= noOfPreviousReturns) {
       schema["ui:disabled"] = true
+=======
+    if (item.readonly) {
+      schema["ui:disabled"] = true;
+>>>>>>> Remove array information to match formData structure from backend
     }
 
     if (item.laReadOnly && (role !== "Homes England" && role !== "Superuser")) {
-      schema["ui:disabled"] = true
+      schema["ui:disabled"] = true;
     }
 
     if (item.s151WriteOnly && (role !== "S151" && role !== "Superuser")) {
-      schema["ui:disabled"] = true
+      schema["ui:disabled"] = true;
     }
 
     if (item.base) {
-      schema["ui:field"] = "base"
+      schema["ui:field"] = "base";
     }
 
-    if(item.periods) {
-      schema["ui:field"] = "periods"
+    if (item.periods) {
+      schema["ui:field"] = "periods";
     }
 
-    if(item.currency) {
-      schema["ui:widget"] = "currency"
+    if (item.currency) {
+      schema["ui:widget"] = "currency";
     }
 
-    if(item.radio) {
-      schema["ui:widget"] = "radio"
+    if (item.radio) {
+      schema["ui:widget"] = "radio";
     }
 
-    if(Object.keys(schema).length === 0) {
+    if (Object.keys(schema).length === 0) {
       return undefined;
     }
 
