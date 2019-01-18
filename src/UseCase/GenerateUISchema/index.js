@@ -1,11 +1,13 @@
 import merge from "utils-merge2";
 
 export default class GenerateUISchema {
-  constructor(userRoleCookieGateway) {
+  constructor(userRoleCookieGateway, returnGateway) {
     this.userRoleGateway = userRoleCookieGateway;
+    this.returnGateway = returnGateway;
   }
   execute(data) {
     let userRole = this.userRoleGateway.getUserRole().userRole;
+
 
     return this.generateUISchema(data.properties, userRole);
   }
