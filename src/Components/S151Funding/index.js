@@ -2,10 +2,6 @@ import React from "react";
 import "./style.css";
 
 export default class S151Funding extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   renderBaseline = () => {
     return (
       <div className="row" data-test="baseline">
@@ -132,28 +128,28 @@ export default class S151Funding extends React.Component {
 
   calculateVarianceTotal = () => {
     let total =
-      parseInt(this.props.formData.baselineVariance1) +
-      parseInt(this.props.formData.baselineVariance2) +
-      parseInt(this.props.formData.baselineVariance3) +
-      parseInt(this.props.formData.baselineVariance4);
+      parseInt(this.props.formData.baselineVariance1, 10) +
+      parseInt(this.props.formData.baselineVariance2, 10) +
+      parseInt(this.props.formData.baselineVariance3, 10) +
+      parseInt(this.props.formData.baselineVariance4, 10);
     return total.toString();
   };
 
   calculateMovementTotal = () => {
     let total =
-      parseInt(this.props.formData.lastMovement1) +
-      parseInt(this.props.formData.lastMovement2) +
-      parseInt(this.props.formData.lastMovement3) +
-      parseInt(this.props.formData.lastMovement4);
+      parseInt(this.props.formData.lastMovement1, 10) +
+      parseInt(this.props.formData.lastMovement2, 10) +
+      parseInt(this.props.formData.lastMovement3, 10) +
+      parseInt(this.props.formData.lastMovement4, 10);
     return total.toString();
   };
 
   calculateMovementVarianceTotal = () => {
     let total =
-      parseInt(this.props.formData.movementVariance1) +
-      parseInt(this.props.formData.movementVariance2) +
-      parseInt(this.props.formData.movementVariance3) +
-      parseInt(this.props.formData.movementVariance4);
+      parseInt(this.props.formData.movementVariance1, 10) +
+      parseInt(this.props.formData.movementVariance2, 10) +
+      parseInt(this.props.formData.movementVariance3, 10) +
+      parseInt(this.props.formData.movementVariance4, 10);
     return total.toString();
   };
 
