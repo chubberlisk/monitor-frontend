@@ -92,13 +92,8 @@ export default class GenerateUISchema {
     return dependencies.oneOf.reduce(reducer, {});
   }
 
-<<<<<<< HEAD
   generateSchemaForProperties(item, role, noOfPreviousReturns) {
     let schema = {}
-=======
-  generateSchemaForItem(item, role) {
-    let schema = {};
->>>>>>> Remove array information to match formData structure from backend
 
     if (item.extendedText) {
       schema["ui:widget"] = "textarea";
@@ -120,17 +115,12 @@ export default class GenerateUISchema {
       schema["ui:field"] = "uploadFile";
     }
 
-<<<<<<< HEAD
     if (item.readonly === true) {
       schema["ui:disabled"] = true
     }
 
     if (item.readonly_after_return <= noOfPreviousReturns) {
       schema["ui:disabled"] = true
-=======
-    if (item.readonly) {
-      schema["ui:disabled"] = true;
->>>>>>> Remove array information to match formData structure from backend
     }
 
     if (item.laReadOnly && (role !== "Homes England" && role !== "Superuser")) {

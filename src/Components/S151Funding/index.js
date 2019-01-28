@@ -9,16 +9,16 @@ export default class S151Funding extends React.Component {
           {this.props.formData.period}
         </div>
         <div className="col-md-2" data-test="baseline1">
-          £{this.insertCommas(this.props.formData.instalment1)}
+          £{this.insertCommas(this.props.formData.instalment01)}
         </div>
         <div className="col-md-2" data-test="baseline2">
-          £{this.insertCommas(this.props.formData.instalment2)}
+          £{this.insertCommas(this.props.formData.instalment02)}
         </div>
         <div className="col-md-2" data-test="baseline3">
-          £{this.insertCommas(this.props.formData.instalment3)}
+          £{this.insertCommas(this.props.formData.instalment03)}
         </div>
         <div className="col-md-2" data-test="baseline4">
-          £{this.insertCommas(this.props.formData.instalment4)}
+          £{this.insertCommas(this.props.formData.instalment04)}
         </div>
         <div className="col-md-2" data-test="total">
           £{this.insertCommas(this.props.formData.total)}
@@ -33,16 +33,16 @@ export default class S151Funding extends React.Component {
         <div className="row" data-test="variance">
           <div className="col-md-2" />
           <div className="col-md-2" data-test="variance1">
-            £{this.insertCommas(this.props.formData.baselineVariance1)}
+            £{this.insertCommas(this.props.formData.instalment1)}
           </div>
           <div className="col-md-2" data-test="variance2">
-            £{this.insertCommas(this.props.formData.baselineVariance2)}
+            £{this.insertCommas(this.props.formData.instalment2)}
           </div>
           <div className="col-md-2" data-test="variance3">
-            £{this.insertCommas(this.props.formData.baselineVariance3)}
+            £{this.insertCommas(this.props.formData.instalment3)}
           </div>
           <div className="col-md-2" data-test="variance4">
-            £{this.insertCommas(this.props.formData.baselineVariance4)}
+            £{this.insertCommas(this.props.formData.instalment4)}
           </div>
           <div className="col-md-2" data-test="varianceTotal">
             £{this.insertCommas(this.calculateVarianceTotal())}
@@ -128,10 +128,10 @@ export default class S151Funding extends React.Component {
 
   calculateVarianceTotal = () => {
     let total =
-      parseInt(this.props.formData.baselineVariance1, 10) +
-      parseInt(this.props.formData.baselineVariance2, 10) +
-      parseInt(this.props.formData.baselineVariance3, 10) +
-      parseInt(this.props.formData.baselineVariance4, 10);
+      parseInt(this.props.formData.instalment1, 10) +
+      parseInt(this.props.formData.instalment2, 10) +
+      parseInt(this.props.formData.instalment3, 10) +
+      parseInt(this.props.formData.instalment4, 10);
     return total.toString();
   };
 
