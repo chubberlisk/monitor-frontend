@@ -59,24 +59,24 @@ export default class ParentForm extends React.Component {
     if (Number.isInteger(path[nextIndex])) return (toBurrow[nextItemKey] = []);
     if (Array.isArray(toBurrow)) {
       toBurrow.push({})
-      return toBurrow[nextItemKey]; 
+      return toBurrow[nextItemKey];
     }
     return toBurrow[nextItemKey] = {}
   }
 
   shareDataBetweenTabs = (formData)  => {
     if(!this.props.schema.sharedData ) return null;
-    
+
     let sharedDataPaths = this.createPathsInArrays(this.props.schema.sharedData, formData)
-    
+
     sharedDataPaths.forEach(path => {
-      let value = this.getObject(formData, path.from)      
+      let value = this.getObject(formData, path.from)
       let pathToSet = this.setPath(formData, path.to)
 
       pathToSet[path.to[path.to.length - 1]] = value
     });
   }
-  
+
   createPathsInArrays(sharedData, formData) {
     let allDataPaths = sharedData.map(value => {
       if (!value.from.includes('#') && !value.to.includes('#')) return value;
@@ -97,7 +97,7 @@ export default class ParentForm extends React.Component {
           to: newToPath
         })
       }
-      return newPaths; 
+      return newPaths;
     })
 
     return allDataPaths.flat()
@@ -117,7 +117,7 @@ export default class ParentForm extends React.Component {
     let newFormData = { ...this.state.formData };
     newFormData[this.state.selected] = formData;
     this.shareDataBetweenTabs(newFormData)
-    
+
     this.setState({ formData: newFormData }, () =>
       this.props.onChange({ formData: this.state.formData })
     );
@@ -243,6 +243,7 @@ export default class ParentForm extends React.Component {
       return (
         <div className="col-md-10">
           <ArraySubform
+            formContext={this.props.formContext}
             data-test={`${this.state.selected}_subform`}
             key={`${this.state.selected}_subform`}
             onChange={formData => {
@@ -262,6 +263,7 @@ export default class ParentForm extends React.Component {
       return (
         <div className="col-md-10 subform">
           <Form
+            formContext={this.props.formContext}
             data-test={`${this.state.selected}_subform`}
             onChange={({ formData }) => {
               this.subformOnChange(formData);
