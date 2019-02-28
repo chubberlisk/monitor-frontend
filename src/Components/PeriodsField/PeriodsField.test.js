@@ -166,5 +166,40 @@ describe("Period Financials", () => {
         expect(periods.removeButton()).toEqual(0);
       });
     });
+
+    describe("null data", () => {
+      let data = null;
+      let schema = {
+        periods: true,
+        title: "cats",
+        type: "Array",
+        addable: true,
+        items: {
+          type: "object",
+          properties: {
+            period: {
+              type: "string",
+              title: "Cat Name"
+            },
+            age: {
+              type: "string",
+              title: "Cat Age"
+            }
+          }
+        }
+      };
+      let uiSchema = {
+        items: {
+          period: {"ui": "readonly"}
+        }
+      }
+      let periods = new Periods(data, schema, uiSchema);
+
+      it("displays and empty row", () => {
+        expect(periods.inputFieldCount("age")).toEqual(1)
+        expect(periods.inputFieldCount("period")).toEqual(1)
+
+      })
+    });
   });
 
