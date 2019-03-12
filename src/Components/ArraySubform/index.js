@@ -34,6 +34,7 @@ export default class ArraySubform extends React.Component {
   };
 
   render() {
+    if (this.props.data.length === 0) return null
     return (
       <div className="subform" id="subform">
         <Form

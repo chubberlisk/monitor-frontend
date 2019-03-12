@@ -71,11 +71,13 @@ export default class Sidebar extends React.Component {
   }
 
   renderItems() {
-    return Object.entries(this.props.items).map(([key, value]) => (
-      <li data-test="sidebar-item" key={key}>
-        {this.renderSidebarItem(value, key)}
-      </li>
-    ));
+    if (Object.keys(this.props.items).length !== 0) {
+      return Object.entries(this.props.items).map(([key, value]) => (
+        <li data-test="sidebar-item" key={key}>
+          {this.renderSidebarItem(value, key)}
+        </li>
+      ));
+    }
   }
 
   addEntry = () => {
@@ -130,7 +132,7 @@ export default class Sidebar extends React.Component {
             data-test="remove-button"
             onClick={this.removeEntry}
           >
-          - 
+          -
           </button>
         </span>
       );
@@ -140,9 +142,6 @@ export default class Sidebar extends React.Component {
   }
 
   render() {
-    if (Object.keys(this.props.items).length === 0) {
-      return <ul data-test="sidebar" />;
-    }
     return (
       <div>
         <ul data-test="sidebar" className="sidebar list-unstyled">
