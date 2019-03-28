@@ -302,7 +302,7 @@ describe("BaselineGateway", () => {
         it("Submits data to the API", async () => {
           let updateProjectRequest = nock("http://rabbits.jump")
           .matchHeader("Content-Type", "application/json")
-          .post("/project/update", {
+          .post("/baseline/update", {
             project_id: 2,
             project_data: { rabbits: "hop" },
             timestamp: "123456"
@@ -316,7 +316,7 @@ describe("BaselineGateway", () => {
         it("Returns successful", async () => {
           nock("http://rabbits.jump")
           .matchHeader("Content-Type", "application/json")
-          .post("/project/update", {
+          .post("/baseline/update", {
             project_id: 2,
             project_data: { rabbits: "hop" },
             timestamp: "123456"
@@ -330,7 +330,7 @@ describe("BaselineGateway", () => {
         it("Returns unsuccessful", async () => {
           nock("http://rabbits.jump")
           .matchHeader("Content-Type", "application/json")
-          .post("/project/update", {
+          .post("/baseline/update", {
             project_id: 2,
             project_data: { rabbits: "hop" },
             timestamp: "123456"
@@ -348,7 +348,7 @@ describe("BaselineGateway", () => {
             getApiKey: jest.fn(() => ({ apiKey: "superSecret" }))
           };
 
-          let request = nock("http://rabbits.jump")
+          nock("http://rabbits.jump")
             .matchHeader("Content-Type", "application/json")
             .post("/baseline/update", {
               project_id: 2,

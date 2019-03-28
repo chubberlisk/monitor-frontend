@@ -219,6 +219,112 @@ describe("Project Gateway", () => {
     });
   });
 
+  describe("#GetAdmin", () => {
+    describe("Given a project exists", () => {
+      let request, response, apiKeyGateway;
+
+      describe("Example one", () => {
+        describe("Connection successful", () => {
+          beforeEach(async () => {
+            process.env.REACT_APP_HIF_API_URL = "http://cat.meow/";
+            apiKeyGateway = {
+              getApiKey: jest.fn(() => ({ apiKey: "superSecret" }))
+            };
+            request = nock("http://cat.meow")
+              .matchHeader("Content-Type", "application/json")
+              .matchHeader("API_KEY", "superSecret")
+              .get("/project/admin/get?id=1")
+              .reply(200, { adminData: {hif: [ { cow: "moo" } ]}, timestamp: 1234 });
+            let gateway = new ProjectGateway(apiKeyGateway);
+            response = await gateway.getAdmin(1);
+          });
+
+          it("Fetches the data from the API", () => {
+            expect(request.isDone()).toBeTruthy();
+          });
+
+          it("Projects the response from the api", () => {
+            expect(response).toEqual({
+              success: true,
+              adminData: {hif: [ { cow: "moo" } ]},
+              timestamp: 1234
+            });
+          });
+
+          it("Calls the api key gateway", () => {
+            expect(apiKeyGateway.getApiKey).toHaveBeenCalled();
+          });
+        });
+
+        describe("Connection failure", () => {
+          it("Returns success as false", async () => {
+            process.env.REACT_APP_HIF_API_URL = "http://cat.meow/";
+            apiKeyGateway = {
+              getApiKey: jest.fn(() => ({ apiKey: "superSecret" }))
+            };
+
+            request = nock("http://cat.meow")
+              .matchHeader("Content-Type", "application/json")
+              .matchHeader("API_KEY", "superSecret")
+              .get("/project/admin/get?id=1")
+              .socketDelay(2000);
+
+            let gateway = new ProjectGateway(apiKeyGateway);
+            response = await gateway.getAdmin(1);
+            expect(response).toEqual({ success: false })
+          });
+        });
+      });
+
+      describe("Example two", () => {
+        let request, response, apiKeyGateway;
+        beforeEach(async () => {
+          process.env.REACT_APP_HIF_API_URL = "http://dog.woof/";
+          apiKeyGateway = {
+            getApiKey: jest.fn(() => ({ apiKey: "extraSecret" }))
+          };
+          request = nock("http://dog.woof")
+            .matchHeader("Content-Type", "application/json")
+            .matchHeader("API_KEY", "extraSecret")
+            .get("/project/admin/get?id=5")
+            .reply(200, { adminData: {other: [{ dogs: "woof" }]}, timestamp: 3456});
+          let gateway = new ProjectGateway(apiKeyGateway);
+          response = await gateway.getAdmin(5);
+        });
+
+        it("Fetches the project from the API", () => {
+          expect(request.isDone()).toBeTruthy();
+        });
+
+        it("Projects the response from the api", () => {
+          expect(response).toEqual({
+            success: true,
+            adminData: {other: [{ dogs: "woof" }]},
+             timestamp: 3456
+          });
+        });
+
+        it("Calls the api key gateway", () => {
+          expect(apiKeyGateway.getApiKey).toHaveBeenCalled();
+        });
+      });
+    });
+
+    describe("Given the project doesnt exist", () => {
+      it("Projects unsuccessful", async () => {
+        let apiKeyGateway = { getApiKey: () => ({ apiKey: "extraSecret" }) };
+        process.env.REACT_APP_HIF_API_URL = "http://dog.woof/";
+        nock("http://dog.woof")
+          .matchHeader("Content-Type", "application/json")
+          .get("/project/admin/get?id=5")
+          .reply(404);
+        let gateway = new ProjectGateway(apiKeyGateway);
+        let response = await gateway.getAdmin(5);
+        expect(response).toEqual({ success: false });
+      });
+    });
+  });
+
   describe("#Submit", () => {
     describe("Example 1", () => {
       let gateway, apiKeyGateway, locationGateway;
@@ -491,7 +597,7 @@ describe("Project Gateway", () => {
 
       describe("Connection Successful", async () => {
         it("Submits data to the API", async () => {
-          let updateProjectRequest = nock("http://rabbits.jump")
+          let updateProjectAdminRequest = nock("http://rabbits.jump")
           .matchHeader("Content-Type", "application/json")
           .post("/project/create", {
             type: "mvf",
@@ -501,7 +607,7 @@ describe("Project Gateway", () => {
           .reply(200, {projectId: 4});
           await gateway.create("my first project", "mvf", "HID/DHS/324678");
 
-          expect(updateProjectRequest.isDone()).toBeTruthy();
+          expect(updateProjectAdminRequest.isDone()).toBeTruthy();
         });
 
         it("Returns successful", async () => {
@@ -564,7 +670,7 @@ describe("Project Gateway", () => {
       });
 
       it("Submits data to the API", async () => {
-        let updateProjectRequest = nock("http://rabbits.jump")
+        let updateProjectAdminRequest = nock("http://rabbits.jump")
           .matchHeader("Content-Type", "application/json")
           .post("/project/create", {
             type: "ff",
@@ -574,7 +680,7 @@ describe("Project Gateway", () => {
           .reply(200, { projectId: 67});
         await gateway.create("my second project", "ff", "DHW/FHY/4623");
 
-        expect(updateProjectRequest.isDone()).toBeTruthy();
+        expect(updateProjectAdminRequest.isDone()).toBeTruthy();
       });
 
       it("Returns successful", async () => {
@@ -625,7 +731,7 @@ describe("Project Gateway", () => {
           role: "Homes England"
         }]
 
-        let updateProjectRequest = nock("http://rabbits.jump")
+        let updateProjectAdminRequest = nock("http://rabbits.jump")
           .matchHeader("Content-Type", "application/json")
           .post("/project/1/add_users", {
             users: users
@@ -633,7 +739,7 @@ describe("Project Gateway", () => {
           .reply(200);
         await gateway.addUser(1, users);
 
-        expect(updateProjectRequest.isDone()).toBeTruthy();
+        expect(updateProjectAdminRequest.isDone()).toBeTruthy();
       });
 
       it("Returns successful", async () => {
@@ -711,7 +817,7 @@ describe("Project Gateway", () => {
           }
         ]
 
-        let updateProjectRequest = nock("http://rabbits.jump")
+        let updateProjectAdminRequest = nock("http://rabbits.jump")
           .matchHeader("Content-Type", "application/json")
           .post("/project/6/add_users", {
             users: users
@@ -719,7 +825,7 @@ describe("Project Gateway", () => {
           .reply(200);
         await gateway.addUser(6, users);
 
-        expect(updateProjectRequest.isDone()).toBeTruthy();
+        expect(updateProjectAdminRequest.isDone()).toBeTruthy();
       });
 
       it("Returns successful", async () => {
@@ -771,6 +877,135 @@ describe("Project Gateway", () => {
 
           let response = await gateway.addUser(6, users);
           expect(response).toEqual({ success: false });
+      });
+    });
+  });
+
+  describe("#Update", () => {
+    describe("Example one", () => {
+      describe("Connection successful", () => {
+        let gateway;
+        let apiKeyGateway = {
+          getApiKey: jest.fn(() => ({ apiKey: "superSecret" }))
+        };
+
+        beforeEach(async () => {
+          process.env.REACT_APP_HIF_API_URL = "http://rabbits.jump/";
+          gateway = new ProjectGateway(apiKeyGateway);
+        });
+
+        it("Submits data to the API", async () => {
+          let updateProjectAdminRequest = nock("http://rabbits.jump")
+          .matchHeader("Content-Type", "application/json")
+          .post("/project/admin/update", {
+            project_id: 2,
+            project_data: { rabbits: "hop" },
+            timestamp: "123456"
+          })
+          .reply(200, { errors: [], timestamp: "2" });
+          await gateway.update(2, { rabbits: "hop" }, "123456");
+
+          expect(updateProjectAdminRequest.isDone()).toBeTruthy();
+        });
+
+        it("Returns successful", async () => {
+          nock("http://rabbits.jump")
+          .matchHeader("Content-Type", "application/json")
+          .post("/project/admin/update", {
+            project_id: 2,
+            project_data: { rabbits: "hop" },
+            timestamp: "123456"
+          })
+          .reply(200, { errors: ["some_errors"], timestamp: "567" });
+          let response = await gateway.update(2, { rabbits: "hop" }, "123456");
+
+          expect(response).toEqual({ success: true, errors: ["some_errors"], new_timestamp: "567" });
+        });
+
+        it("Returns unsuccessful", async () => {
+          nock("http://rabbits.jump")
+          .matchHeader("Content-Type", "application/json")
+          .post("/project/admin/update", {
+            project_id: 2,
+            project_data: { rabbits: "hop" },
+            timestamp: "123456"
+          })
+          .reply(500, {});
+          let response = await gateway.update(2, { rabbits: "hop" }, "123456");
+
+          expect(response).toEqual({ success: false });
+        });
+      });
+      describe("Connection failure", () => {
+        it("Returns success as false", async () => {
+          process.env.REACT_APP_HIF_API_URL = "http://cat.meow/";
+          let apiKeyGateway = {
+            getApiKey: jest.fn(() => ({ apiKey: "superSecret" }))
+          };
+
+          nock("http://rabbits.jump")
+            .matchHeader("Content-Type", "application/json")
+            .post("/baseline/admin/update", {
+              project_id: 2,
+              project_data: { rabbits: "hop" },
+              timestamp: "123456"
+            })
+            .socketDelay(2000);
+
+          let gateway = new ProjectGateway(apiKeyGateway);
+          let response = await gateway.update(2, { rabbits: "hop" }, "123456");
+          expect(response).toEqual({ success: false });
+        });
+      });
+    });
+    describe("Example two", () => {
+      let gateway;
+      let apiKeyGateway = {
+        getApiKey: jest.fn(() => ({ apiKey: "superSecret" }))
+      };
+
+      beforeEach(async () => {
+        process.env.REACT_APP_HIF_API_URL = "http://rabbits.jump/";
+        gateway = new ProjectGateway(apiKeyGateway);
+      });
+
+      it("Submits data to the API", async () => {
+        let updateProjectAdminRequest = nock("http://rabbits.jump")
+          .matchHeader("Content-Type", "application/json")
+          .post("/project/admin/update", {
+            project_id: 6,
+            project_data: { cows: "moo" }
+          })
+          .reply(200, {errors: [], timestamp: "0"});
+        await gateway.update(6, { cows: "moo" });
+
+        expect(updateProjectAdminRequest.isDone()).toBeTruthy();
+      });
+
+      it("Returns successful", async () => {
+        nock("http://rabbits.jump")
+          .matchHeader("Content-Type", "application/json")
+          .post("/project/admin/update", {
+            project_id: 6,
+            project_data: { cows: "moo" },
+            timestamp: "2343"
+          })
+          .reply(200, { errors: ["more_errors"], timestamp: "789"});
+        let response = await gateway.update(6, { cows: "moo" }, "2343");
+        expect(response).toEqual({ success: true, errors: ["more_errors"], new_timestamp: "789" });
+      });
+
+      it("Returns unsuccessful", async () => {
+        nock("http://rabbits.jump")
+          .matchHeader("Content-Type", "application/json")
+          .post("/project/admin/update", {
+            project_id: 6,
+            project_data: { cows: "moo" },
+            timestamp: "2343"
+          })
+          .reply(403, {});
+        let response = await gateway.update(6, { cows: "moo" }, "2343");
+        expect(response).toEqual({ success: false });
       });
     });
   });

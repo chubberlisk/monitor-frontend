@@ -63,6 +63,29 @@ export default class ProjectGateway {
     }
   }
 
+  async getAdmin(projectId) {
+    let rawResponse = await fetch(
+      `${this.env.REACT_APP_HIF_API_URL}project/admin/get?id=${projectId}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          API_KEY: this.apiKeyGateway.getApiKey().apiKey
+        }
+      }
+    ).catch(() => ({ ok: false }));
+
+    if (rawResponse.ok) {
+      let response = await rawResponse.json();
+      return {
+        success: true,
+        adminData: response.adminData,
+        timestamp: response.timestamp
+      }
+    } else {
+      return { success: false }
+    }
+  }
+
   async submit(project_id) {
     let response = await fetch(
       `${this.env.REACT_APP_HIF_API_URL}project/submit`,
@@ -103,6 +126,27 @@ export default class ProjectGateway {
     );
     if (response.ok) {
       return { success: true };
+    } else {
+      return { success: false };
+    }
+  }
+
+  async update(project_id, project_data, timestamp) {
+    let response = await fetch(
+      `${this.env.REACT_APP_HIF_API_URL}project/admin/update`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          API_KEY: this.apiKeyGateway.getApiKey().apiKey
+        },
+        body: JSON.stringify({ project_id, project_data, timestamp })
+      }
+    ).catch(() => ({ ok: false }));
+
+    if (response.ok) {
+      let rawResponse  = await response.json();
+      return { success: true, errors: rawResponse.errors, new_timestamp: rawResponse.timestamp};
     } else {
       return { success: false };
     }
