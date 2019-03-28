@@ -234,7 +234,11 @@ describe("Project Gateway", () => {
               .matchHeader("Content-Type", "application/json")
               .matchHeader("API_KEY", "superSecret")
               .get("/project/admin/get?id=1")
-              .reply(200, { adminData: {hif: [ { cow: "moo" } ]}, timestamp: 1234 });
+              .reply(200, {
+                adminData: {hif: [ { cow: "moo" } ]},
+                timestamp: 1234 ,
+                adminSchema: {some: "schema"}
+              });
             let gateway = new ProjectGateway(apiKeyGateway);
             response = await gateway.getAdmin(1);
           });
@@ -247,6 +251,7 @@ describe("Project Gateway", () => {
             expect(response).toEqual({
               success: true,
               adminData: {hif: [ { cow: "moo" } ]},
+              adminSchema: {some: "schema"},
               timestamp: 1234
             });
           });
@@ -287,7 +292,11 @@ describe("Project Gateway", () => {
             .matchHeader("Content-Type", "application/json")
             .matchHeader("API_KEY", "extraSecret")
             .get("/project/admin/get?id=5")
-            .reply(200, { adminData: {other: [{ dogs: "woof" }]}, timestamp: 3456});
+            .reply(200, {
+              adminData: {other: [{ dogs: "woof" }]},
+              timestamp: 3456,
+              adminSchema: {another: "schema"},
+            });
           let gateway = new ProjectGateway(apiKeyGateway);
           response = await gateway.getAdmin(5);
         });
@@ -300,7 +309,8 @@ describe("Project Gateway", () => {
           expect(response).toEqual({
             success: true,
             adminData: {other: [{ dogs: "woof" }]},
-             timestamp: 3456
+            adminSchema: {another: "schema"},
+            timestamp: 3456
           });
         });
 

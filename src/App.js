@@ -124,7 +124,8 @@ const unsubmitProject = new UnsubmitProject(projectGateway)
 const updateReturnUseCase = new UpdateReturn(returnGateway);
 const updateSubmittedReturnUseCase = new UpdateSubmittedReturn(returnGateway);
 const updateClaimUseCase = new UpdateClaim(claimGateway);
-const updateProjectUseCase = new UpdateProject(baselineGateway);
+const updateBaselineUseCase = new UpdateProject(baselineGateway);
+const updateProjectAdminUseCase = new UpdateProject(projectGateway);
 const addUsersToProject = new AddUsersToProject(projectGateway);
 const amendBaseline = new AmendBaseline(baselineGateway);
 const getBaselines = new GetBaselines(baselineGateway);
@@ -287,7 +288,7 @@ const renderInfrastructuresPage = (props) => (
     <div className="row  col-md-offset-1">
       <InfrastructureAdditionPage
         {...props}
-        updateProject={updateProjectUseCase}
+        updateProject={updateBaselineUseCase}
         getProject={getProjectUseCase}
         generateInfrastructureUISchema={generateInfrastructureUISchemaUseCase}
       />
@@ -319,7 +320,7 @@ const renderAmendBaselinePage = props => (
           projectType={projectType}
           getProject={getProjectUseCase}
           submitBaseline={submitBaseline}
-          updateProject={updateProjectUseCase}
+          updateProject={updateBaselineUseCase}
           validateProject={validateProjectUseCase}
           documentGateway={documentGateway}
           getRole={getRole}
@@ -461,7 +462,7 @@ const renderBaseline = props => (
             projectType={projectType}
             getProject={getProjectUseCase}
             submitProject={submitProjectUseCase}
-            updateProject={updateProjectUseCase}
+            updateProject={updateBaselineUseCase}
             validateProject={validateProjectUseCase}
             documentGateway={documentGateway}
             getRole={getRole}
@@ -497,6 +498,12 @@ const renderhomepage = props => (
     )}
   </Homepage>
 );
+
+const renderAdminScreen = props => (
+  <div>
+    Hi give me your project details
+  </div>
+)
 
 
 const App = () => (
@@ -535,6 +542,7 @@ const App = () => (
 
                       >
                         <Route exact path="/project/:projectId" render={renderProjectPage} />
+                        <Route exact path="/project/:projectId/admin" render={renderAdminScreen} />
                         <Route
                           exact
                           path="/project/:projectId/infrastructures"

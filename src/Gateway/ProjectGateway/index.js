@@ -78,6 +78,7 @@ export default class ProjectGateway {
       let response = await rawResponse.json();
       return {
         success: true,
+        adminSchema: response. adminSchema,
         adminData: response.adminData,
         timestamp: response.timestamp
       }
