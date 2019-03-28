@@ -26,7 +26,7 @@ class APISimulator {
     let projectRequest = nock(this.url)
       .matchHeader("Content-Type", "application/json")
       .persist()
-      .post("/project/update", {project_id: ""+project_id, project_data, timestamp});
+      .post("/baseline/update", {project_id: ""+project_id, project_data, timestamp});
 
     return new APIResponse(projectRequest, response);
   }

@@ -29,6 +29,27 @@ export default class BaselineGateway {
     }
   }
 
+  async update(project_id, project_data, timestamp) {
+    let response = await fetch(
+      `${this.env.REACT_APP_HIF_API_URL}baseline/update`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          API_KEY: this.apiKeyGateway.getApiKey().apiKey
+        },
+        body: JSON.stringify({ project_id, project_data, timestamp })
+      }
+    ).catch(() => ({ ok: false }));
+
+    if (response.ok) {
+      let rawResponse  = await response.json();
+      return { success: true, errors: rawResponse.errors, new_timestamp: rawResponse.timestamp};
+    } else {
+      return { success: false };
+    }
+  }
+
   async amend(project_id) {
     let response = await fetch(
       `${this.env.REACT_APP_HIF_API_URL}baseline/amend`,
