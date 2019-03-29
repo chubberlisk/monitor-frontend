@@ -27,6 +27,8 @@ import PrintReturn from "./Components/PrintReturn";
 import AdminPortal from "./Components/AdminPortal";
 import AmendBaselineButton from "./Components/AmendBaselineButton";
 import AmendProjectPage from "./Components/AmendProjectPage";
+import AdminPageProvider from "./Components/AdminPageProvider";
+import AdminPage from "./Components/AdminPage"
 
 import AddUsersToProject from "./UseCase/AddUsersToProject";
 import CreateReturn from "./UseCase/CreateReturn";
@@ -46,6 +48,7 @@ import GetBaseClaim from "./UseCase/GetBaseClaim";
 import CanAccessProject from "./UseCase/CanAccessProject";
 import CanAccessMonitor from "./UseCase/CanAccessMonitor";
 import GetProject from "./UseCase/GetProject";
+import GetProjectAdmin from "./UseCase/GetProjectAdmin";
 import GetProjectURL from "./UseCase/GetProjectURL";
 import GetReturn from "./UseCase/GetReturn";
 import GetClaim from "./UseCase/GetClaim";
@@ -110,6 +113,7 @@ const getBaseReturnUseCase = new GetBaseReturn(returnGateway);
 const getBaseClaimUseCase = new GetBaseClaim(claimGateway);
 const getInfrastructuresUseCase = new GetInfrastructures(projectGateway);
 const getProjectUseCase = new GetProject(projectGateway);
+const getProjectAdmin = new GetProjectAdmin(projectGateway);
 const getProjectURL = new GetProjectURL(locationGateway);
 const getReturnUseCase = new GetReturn(returnGateway);
 const getClaimUseCase = new GetClaim(claimGateway);
@@ -501,7 +505,26 @@ const renderhomepage = props => (
 
 const renderAdminScreen = props => (
   <div>
-    Hi give me your project details
+    <AdminPageProvider
+      {...props}
+      getProjectAdmin = {getProjectAdmin}
+      generateDisabledUiSchema = {generateDisabledUISchema}
+      generateUiSchema = {generateUISchema}
+    >
+      {({projectId, schema, data, uiSchema, timestamp, onEditToggle}) => {
+        return <AdminPage
+          projectId = {projectId}
+          update = {updateProjectAdminUseCase}
+          schema = {schema}
+          data = {data}
+          documentGateway={documentGateway}
+          timestamp = {timestamp}
+          uiSchema = {uiSchema}
+          getRole = {getRole}
+          onEditToggle = {onEditToggle}
+        />
+      }}
+    </AdminPageProvider>
   </div>
 )
 
