@@ -159,9 +159,15 @@ export default class AdminPage extends React.Component {
 
   render() {
     return <div>
-      {this.renderMessages()}
-      <div className="col-md-offset-3 col-md-9">
-        {this.renderButton()}
+      <div className="row">
+        <div className="col-md-offset-3 col-md-8">
+          {this.renderButton()}
+        </div>
+      </div>
+      <div className="row">
+        <div className=" col-md-12">
+          {this.renderMessages()}
+        </div>
       </div>
       <ParentForm
         schema={this.composeAdminSchema()}
