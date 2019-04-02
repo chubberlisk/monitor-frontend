@@ -170,18 +170,18 @@ describe("<AdminPage>", () => {
 
   describe("Homes England Users", () => {
     let getRoleSpy = {execute: jest.fn(() => ({role: "Homes England"}))};
+    let editSpy = jest.fn();
     describe("Example 1", () => {
-    let page, updateAdminSpy, editSpy;
+    let page, updateAdminSpy;
       beforeEach(() => {
-        editSpy = jest.fn();
         updateAdminSpy = { execute: jest.fn((presenter, _) => presenter.projectUpdated([], 1234))}
         page = mount(
           <AdminPage
             documentGateway={documentGatewaySpy}
             update = {updateAdminSpy}
             status = {"viewing"}
-            onEdit = {editSpy}
-            match={{ params: { projectId: 1 }}}
+            onEditToggle = {editSpy}
+            projectId = {1}
             timestamp = {1234}
             data = {{ dark: { cat: 'purr' }}}
             getRole={getRoleSpy}
@@ -218,6 +218,10 @@ describe("<AdminPage>", () => {
           page.find("[data-test='edit-button']").simulate('click')
         });
 
+        it("calls the edit toggle", () => {
+          expect(editSpy).toHaveBeenCalled();
+        });
+
         it("doesn't render an edit button", async () => {
           await page.update()
           expect(page.find("[data-test='edit-button']").length).toEqual(0);
@@ -232,12 +236,15 @@ describe("<AdminPage>", () => {
           page.find('input[type="text"]').simulate('change', {target: {value: 'dog'} })
           await wait();
           page.find("[data-test='save-button']").simulate('click')
+          await wait();
   
           expect(updateAdminSpy.execute).toHaveBeenCalledWith(expect.anything(), {
             projectId: 1,
             data: { dark: { cat: 'dog' }},
             timestamp: 1234
-          })
+          });
+
+          expect(editSpy).toHaveBeenCalled();
         });
       });
 
@@ -245,10 +252,15 @@ describe("<AdminPage>", () => {
         beforeEach(async () => {
           page.find("[data-test='edit-button']").simulate('click')
           await wait();
+          page.update();
+
           page.find('input[type="text"]').simulate('change', {target: {value: 'dog'} })
           await wait();
+
           page.find("[data-test='save-button']").simulate('click')
-          await page.update();
+          await wait();
+          page.update();
+
         });
 
         it("Displays a save success message", () => {
@@ -274,8 +286,8 @@ describe("<AdminPage>", () => {
             documentGateway={documentGatewaySpy}
             update = {updateAdminSpy}
             status = {"viewing"}
-            onEdit = {jest.fn()}
-            match={{ params: { projectId: 3 }}}
+            onEditToggle = {editSpy}
+            projectId = {3}
             getRole={getRoleSpy}
             timestamp = { 3333 }
             schema = {{
@@ -300,6 +312,8 @@ describe("<AdminPage>", () => {
         it("calls the update use case with the data when clicking the button", async () => {
           await page.update()
           page.find("[data-test='save-button']").simulate('click')
+          await wait();
+
           expect(updateAdminSpy.execute).toHaveBeenCalledWith(expect.anything(), {
             projectId: 3,
             data: { name: 'name'},
@@ -311,6 +325,7 @@ describe("<AdminPage>", () => {
           page.find('input[type="text"]').simulate('change', {target: {value: 'quack'} })
           await wait();
           page.find("[data-test='save-button']").simulate('click')
+          await wait();
 
           expect(updateAdminSpy.execute).toHaveBeenCalledWith(expect.anything(), {
             projectId: 3,
@@ -330,7 +345,7 @@ describe("<AdminPage>", () => {
             <AdminPage
               documentGateway={documentGatewaySpy}
               status={"viewing"}
-              onEdit={jest.fn()}
+              onEditToggle = {editSpy}
               update = {updateAdminSpy}
               match={{ params: { projectId: 1 }}}
               timestamp = {1234}
@@ -359,6 +374,8 @@ describe("<AdminPage>", () => {
           await wait();
           await page.update();
           page.find('[data-test="save-button"]').simulate('click')
+          await wait();
+          await page.update();
   
           expect(page.find('[data-test="save-unsuccessful-error"]').length).toEqual(1)
         });
@@ -372,7 +389,7 @@ describe("<AdminPage>", () => {
             <AdminPage
               documentGateway={documentGatewaySpy}
               status={"viewing"}
-              onEdit={jest.fn()}
+              onEditToggle = {editSpy}
               update = {updateAdminSpy}
               match={{ params: { projectId: 1 }}}
               timestamp = {1234}
@@ -401,6 +418,8 @@ describe("<AdminPage>", () => {
           await wait();
           await page.update()
           page.find('[data-test="save-button"]').simulate('click')
+          await wait();
+          await page.update()
   
           expect(page.find('[data-test="overwriting-error"]').length).toEqual(1)
         });
