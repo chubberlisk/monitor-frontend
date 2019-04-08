@@ -10,9 +10,9 @@ export default class CreateReturn {
     );
 
     if (success) {
-      presenter.creationSuccessful(returnId);
+      await presenter.creationSuccessful(returnId);
     } else {
-      presenter.creationUnsuccessful();
+      await presenter.creationUnsuccessful();
     }
   }
 }
