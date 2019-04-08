@@ -31,6 +31,7 @@ export default class ReturnPage extends React.Component {
     } else {
       uiSchema = this.props.generateUISchema.execute(returnData.schema, returnData.no_of_previous_returns);
     }
+
     await this.setState({
       loading: false,
       type: returnData.type,

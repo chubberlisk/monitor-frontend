@@ -241,7 +241,7 @@ describe("Viewing a project", () => {
     expect(page.find("ProjectPage").length).toEqual(0);
   });
 
-   describe("Given valid token", () => {
+  describe("Given valid token", () => {
     beforeEach(() => {
       api.expendToken("Cats").successfully();
       api.expendEmptyTokenForProject().successfully();
@@ -314,7 +314,6 @@ describe("Viewing a project", () => {
 
         expect(summary.find('div[data-test="summary_toes"]').length).toEqual(0)
       });
-
 
       it("Renders the return list within the project sumary page with information from the API", async () => {
         let data = {
@@ -394,6 +393,9 @@ describe("Viewing a project", () => {
           api.checkApiKey(0).successfully();
           api.getProject(projectSchema, projectData, projectStatus, projectType).successfully();
           api.getBaseReturn(returnSchema, returnData).successfully();
+          api.createReturn(0, returnData, 1).successfully();
+          api.createReturn(0, returnData, 1).successfully();
+          api.getReturn(returnSchema, returnData).successfully();
           api.getReturns({returns: []}).successfully();
 
           let page = new AppPage("/project/0?token=Cats");
@@ -412,6 +414,7 @@ describe("Viewing a project", () => {
 
         it("Renders the return with information from the API", async () => {
           api.checkApiKey(0).successfully();
+          api.createReturn(0, returnData, 1).successfully();
           api.getReturn(returnSchema, returnData).successfully();
           let page = new AppPage("/project/0/return/1?token=Cats");
           await page.load();
@@ -432,6 +435,9 @@ describe("Viewing a project", () => {
           api.getProject(projectSchema, projectData, projectStatus, projectType).successfully();
           api.getReturns({returns: []}).successfully();
           api.getBaseClaim(claimSchema, emptyClaimData).successfully();
+          api.createClaim(0, emptyClaimData, 1).successfully();
+          api.createClaim(0, emptyClaimData, 1).successfully();
+          api.getClaim(claimSchema, emptyClaimData).successfully();
 
           let page = new AppPage("/project/0?token=Cats");
           await page.load();
@@ -448,6 +454,7 @@ describe("Viewing a project", () => {
 
         it("Renders the return with information from the API", async () => {
           api.checkApiKey(0).successfully();
+          api.createClaim(0, filledClaimData, 1).successfully();
           api.getClaim(claimSchema, filledClaimData).successfully();
           let page = new AppPage("/project/0/claim/1?token=Cats");
           await page.load();

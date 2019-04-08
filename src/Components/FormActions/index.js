@@ -18,6 +18,12 @@ export default class FormActions extends React.Component {
     };
   }
 
+  componentDidMount() {
+    if (this.state.status === "New") {
+      this.onFormCreate(this.state.formData);
+    }
+  }
+
   submissionUnsuccessful = async () => {
     this.setState({ status: "SubmissionFailure" });
   };
@@ -221,14 +227,6 @@ export default class FormActions extends React.Component {
       Save Changes
     </button>
 
-  renderCreateButton = () =>
-    <button
-      className="btn btn-primary form-button"
-      data-test="create-button"
-      onClick={() => this.onFormCreate(this.state.formData)}>
-      Create Draft
-    </button>
-
   renderDisabledSaveButton = () =>
     <button
       className="btn form-button disabled"
@@ -268,11 +266,6 @@ export default class FormActions extends React.Component {
       return <div/>;
     }
 
-    if (this.state.status === 'New') {
-      return <div className="col-md-offset-3 col-md-9 return-actions">
-          {this.renderCreateButton()}
-      </div>;
-    }
     if (this.state.status === 'Updating') {
       return <div className="col-md-offset-3 col-md-9 return-actions">
           {this.renderDisabledSaveButton()}

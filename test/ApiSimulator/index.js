@@ -22,6 +22,24 @@ class APISimulator {
       return new APIResponse(projectRequest, response);
   }
 
+  createReturn(project_id, data, id) {
+    let response = {id};
+    let projectRequest = nock(this.url)
+      .matchHeader("Content-Type", "application/json")
+      .post("/return/create", {project_id: String(project_id), data});
+
+      return new APIResponse(projectRequest, response);
+  }
+
+  createClaim(project_id, data, id) {
+    let response = {id};
+    let projectRequest = nock(this.url)
+      .matchHeader("Content-Type", "application/json")
+      .post("/claim/create", {project_id: String(project_id), data});
+
+      return new APIResponse(projectRequest, response);
+  }
+
   updateProject(project_data, project_id, response = {errors: []}, timestamp = "0") {
     let projectRequest = nock(this.url)
       .matchHeader("Content-Type", "application/json")

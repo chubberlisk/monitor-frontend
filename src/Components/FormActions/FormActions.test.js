@@ -21,10 +21,6 @@ async function save(form) {
   await wait();
 }
 
-function create(form) {
-  form.find('[data-test="create-button"]').simulate("click");
-}
-
 function submit(form) {
   form.find('[data-test="submit-button"]').simulate("click");
 }
@@ -120,23 +116,6 @@ describe("<FormActions>", () => {
         wrapper.find({ "data-test": "return-form" }).props().formContext
       ).toEqual({projectId: 6, getInfrastructures: "More infrastructures", returnStatus: "Draft"});
     });
-  });
-
-  it("Displays the create button if the status is new", () => {
-    let wrapper = mount(
-      <FormActions
-        formType="return"
-        match={{params: {projectId: 1}}}
-        data={initialData}
-        schema={formSchema}
-        status="New"
-        getRole={{execute: jest.fn(()=> ({role: "Homes England"}))}}
-      />
-    );
-
-    let actions = wrapper.find('[data-test="create-button"]');
-
-    expect(actions.length).toEqual(1);
   });
 
   describe("Submitted", () => {
@@ -563,7 +542,7 @@ describe("<FormActions>", () => {
 
   describe("Saving", () => {
     describe("New status", () => {
-      it("Calls the create usecase when saving the draft", () => {
+      it("Calls the create usecase on mount", async () => {
         let wrapper = shallow(
           <FormActions
             formType="return"
@@ -581,13 +560,14 @@ describe("<FormActions>", () => {
           />
         );
 
-        create(wrapper);
+        await wrapper.update();
         expect(createSpy.execute).toHaveBeenCalledWith(
           expect.anything(),
           {
-          projectId: 1,
-          data: {cats: { details: { noise: "Meow" } }}
-        });
+            projectId: 1,
+            data: {cats: { details: { noise: "Meow" } }}
+          }
+        );
       });
     });
 
