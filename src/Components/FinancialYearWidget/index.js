@@ -6,7 +6,7 @@ export default class FinancialYearWidget extends React.Component {
       if (this.props.value[4] === "/") {
         return this.props.value.split("/")[0];
       } else {
-        return (new Date(this.props.value)).getFullYear()-1;
+        return this.props.value.split("-")[0]-1;
       }
     }
 
@@ -22,7 +22,7 @@ export default class FinancialYearWidget extends React.Component {
 
   getShortEndDate = () => {
     if (this.props.value) {
-      return "/"+(String((new Date(this.props.value)).getFullYear()).substr(-2));
+      return "/"+(this.props.value.split("-")[0].substr(-2));
     } else {
       return "/yy";
     }

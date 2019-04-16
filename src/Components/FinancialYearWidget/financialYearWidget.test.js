@@ -10,6 +10,11 @@ describe("<FinancialYearWidget>", () => {
         expect(wrap.find("[data-test='start-year']").props().value).toEqual("2020");
       });
 
+      it("Given a very incomplete year", () => {
+        let wrap = mount(<FinancialYearWidget value="1-03-31" onChange={() => {}}/>);
+        expect(wrap.find("[data-test='start-year']").props().value).toEqual("0");
+      });
+
       it("Given the legacy format", () => {
         let wrap = mount(<FinancialYearWidget value="2020/21" onChange={() => {}}/>);
         expect(wrap.find("[data-test='start-year']").props().value).toEqual("2020");
@@ -61,6 +66,11 @@ describe("<FinancialYearWidget>", () => {
         let wrap = mount(<FinancialYearWidget value="1990/91" onChange={() => {}}/>);
         expect(wrap.find("[data-test='start-year']").props().value).toEqual("1990");
       });
+
+      it("Given a very incomplete year", () => {
+        let wrap = mount(<FinancialYearWidget value="2-03-31" onChange={() => {}}/>);
+        expect(wrap.find("[data-test='start-year']").props().value).toEqual("1");
+      });
     });
 
     describe("When a year is entered", () => {
@@ -80,9 +90,9 @@ describe("<FinancialYearWidget>", () => {
         expect(wrap.find("[data-test='end-year']").text()).toEqual("/90");
       });
 
-      describe("Given an incomplete year", () => {
-        let wrap = mount(<FinancialYearWidget value="199-03-31" onChange={() => {}}/>);
-        expect(wrap.find("[data-test='end-year']").text()).toEqual("/99");
+      it("Given an incomplete year", () => {
+        let wrap = mount(<FinancialYearWidget value="19-03-31" onChange={() => {}}/>);
+        expect(wrap.find("[data-test='end-year']").text()).toEqual("/19");
       });
     });
   })
