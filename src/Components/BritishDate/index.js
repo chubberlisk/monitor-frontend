@@ -128,7 +128,7 @@ export default class BritishDate extends React.Component {
         data-test="date-month"
         placeholder="mm"
         value={this.parseDate(this.props.value).month}
-        onChange={ (e) => {this.onDateChanged({month: e.target.value})}}
+        onChange={(e) => {this.onDateChanged({month: e.target.value})}}
         readOnly={this.isInputDisabled()}
       />
       <input
