@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class FinancialYear extends React.Component {
+export default class FinancialYearWidget extends React.Component {
   getDisplayYear = () => {
     if (this.props.value) {
       if (this.props.value[4] === "/") {
@@ -27,7 +27,7 @@ export default class FinancialYear extends React.Component {
   }
 
   render = () =>
-    <div className="input-group FinancialYear">
+    <div className="input-group FinancialYearWidget">
       <input
         type="text"
         className="form-control"

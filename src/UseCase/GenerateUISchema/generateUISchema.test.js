@@ -2125,4 +2125,44 @@ describe("GenerateUISchema", () => {
       });
     });
   });
+
+  describe("Financial year entry", () => {
+    describe("Example one", () => {
+      it("Marks the field as a financial year entry", () => {
+        let schema = {
+          type: "object",
+          properties: {
+            a: {
+              type: "object",
+              properties: {
+                b: { type: "string", format: "date", financialYear: true }
+              }
+            }
+          }
+        };
+        let response = useCase.execute(schema);
+        expect(response).toEqual({
+          a: { b: { "ui:widget": "financialYear" } }
+        });
+      });
+
+      it("Doesn't mark the field as a financial year entry", () => {
+        let schema = {
+          type: "object",
+          properties: {
+            a: {
+              type: "object",
+              properties: {
+                b: { type: "string", format: "date" }
+              }
+            }
+          }
+        };
+        let response = useCase.execute(schema);
+        expect(response).toEqual({
+          a: { b: { "ui:widget": "britishDate" } }
+        });
+      });
+    });
+  });
 });

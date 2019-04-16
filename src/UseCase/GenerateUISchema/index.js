@@ -102,63 +102,67 @@ export default class GenerateUISchema {
     let schema = {}
 
     if (item.downloadURI) {
-      schema["ui:widget"] = "downloadable"
+      schema["ui:widget"] = "downloadable";
     }
-    
+
     if (item.extendedText) {
-      schema["ui:widget"] = "textarea"
+      schema["ui:widget"] = "textarea";
     }
 
     if (item.format === "date") {
-      schema["ui:widget"] = "britishDate"
+      schema["ui:widget"] = "britishDate";
+    }
+
+    if (item.financialYear) {
+      schema["ui:widget"] = "financialYear";
     }
 
     if (item.percentage) {
-      schema["ui:widget"] = "percentage"
+      schema["ui:widget"] = "percentage";
     }
 
     if (item.hidden) {
-      schema["ui:widget"] = "hidden"
+      schema["ui:widget"] = "hidden";
     }
 
     if (item.uploadFile) {
-      schema["ui:field"] = "uploadFile"
+      schema["ui:field"] = "uploadFile";
     }
 
     if (item.readonly === true) {
-      schema["ui:disabled"] = true
+      schema["ui:disabled"] = true;
     }
 
     if (item.readonly_after_return <= noOfPreviousReturns) {
-      schema["ui:disabled"] = true
+      schema["ui:disabled"] = true;
     }
 
     if (item.laReadOnly && (role !== "Homes England" && role !== "Superuser")) {
-      schema["ui:disabled"] = true
+      schema["ui:disabled"] = true;
     }
 
     if (item.s151WriteOnly && (role !== "Local Authority" && role !== "Superuser")) {
-      schema["ui:disabled"] = true
+      schema["ui:disabled"] = true;
     }
 
     if (item.base) {
-      schema["ui:field"] = "base"
+      schema["ui:field"] = "base";
     }
 
     if(item.linkToInfra) {
-      schema["ui:widget"] = "pickInfrastructure"
+      schema["ui:widget"] = "pickInfrastructure";
     }
 
     if(item.periods) {
-      schema["ui:field"] = "periods"
+      schema["ui:field"] = "periods";
     }
 
     if(item.currency) {
-      schema["ui:widget"] = "currency"
+      schema["ui:widget"] = "currency";
     }
 
     if(item.radio) {
-      schema["ui:widget"] = "radio"
+      schema["ui:widget"] = "radio";
     }
 
     if(Object.keys(schema).length === 0) {

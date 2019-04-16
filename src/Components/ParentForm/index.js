@@ -21,6 +21,7 @@ import BritishDate from "../BritishDate";
 import WorkflowViewer from "../WorkflowViewer";
 import DownloadPseudoWidget from "../DownloadPseudoWidget";
 import UploadFileField from "../UploadFileField";
+import FinancialYearWidget from "../FinancialYearWidget";
 import "./style.css";
 
 export default class ParentForm extends React.Component {
@@ -221,7 +222,7 @@ export default class ParentForm extends React.Component {
 
   isAddable = () => this.props.uiSchema &&
     this.props.uiSchema[this.state.selected] &&
-    this.props.uiSchema[this.state.selected]["ui:options"] && 
+    this.props.uiSchema[this.state.selected]["ui:options"] &&
     this.props.uiSchema[this.state.selected]["ui:options"]["addable"]
 
 
@@ -300,7 +301,8 @@ export default class ParentForm extends React.Component {
       currency: CurrencyWidget,
       percentage: PercentageWidget,
       pickInfrastructure: PickInfrastructureWidget,
-      downloadable: DownloadPseudoWidget
+      downloadable: DownloadPseudoWidget,
+      financialYear: FinancialYearWidget
     };
 
     if (this.selectedSchema().type === "array") {
