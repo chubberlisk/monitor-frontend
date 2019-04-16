@@ -38,6 +38,8 @@ export default class ParentForm extends React.Component {
       selectedFormSection: this.getInitialFormSection(props.schema, first_tab),
       selectedFormItemIndex: 0
     };
+
+    this.shareDataBetweenTabs(this.state.formData);
   }
 
   getFirstProperty(schema) {
