@@ -24,7 +24,7 @@ describe("CurrencyWidget", () => {
               schema={schema}
               onChange={onChangeSpy}
               currency={currencySymbol}
-              />
+            />
           );
         });
 
@@ -54,7 +54,7 @@ describe("CurrencyWidget", () => {
               schema={schema}
               onChange={onChangeSpy}
               currency={currencySymbol}
-              />
+            />
           );
         });
 
@@ -87,7 +87,7 @@ describe("CurrencyWidget", () => {
               schema={schema}
               onChange={onChangeSpy}
               currency={currencySymbol}
-              />
+            />
           );
         });
 
@@ -421,7 +421,7 @@ describe("CurrencyWidget", () => {
     beforeEach(() => {
       schema = {
         title: "Rabbits",
-        type: "sting",
+        type: "string",
         readonly: true
       };
 
@@ -440,7 +440,7 @@ describe("CurrencyWidget", () => {
     beforeEach(() => {
       schema = {
         title: "Rabbits",
-        type: "sting",
+        type: "string",
         hidden: true
       };
 

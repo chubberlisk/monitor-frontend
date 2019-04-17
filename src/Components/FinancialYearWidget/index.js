@@ -46,6 +46,7 @@ export default class FinancialYearWidget extends React.Component {
         data-test="start-year"
         value={String(this.getDisplayYear())}
         onChange={this.onChange}
+        disabled={this.props.disabled}
       />
       <div className="input-group-addon">
         <span data-test="end-year" className="input-group-text">

@@ -3,6 +3,16 @@ import {mount} from 'enzyme';
 import FinancialYearWidget from '.';
 
 describe("<FinancialYearWidget>", () => {
+  it("Disables", () => {
+    let wrap = mount(<FinancialYearWidget disabled={true} onChange={() => {}}/>);
+    expect(wrap.find("[data-test='start-year']").props().disabled).toBeTruthy();
+  });
+
+  it("Does not disable", () => {
+    let wrap = mount(<FinancialYearWidget disabled={false} onChange={() => {}}/>);
+    expect(wrap.find("[data-test='start-year']").props().disabled).toBeFalsy();
+  });
+
   describe("Example 1", () => {
     describe("Sets the input box value", () => {
       it("Given a year with an invalid format", () => {
