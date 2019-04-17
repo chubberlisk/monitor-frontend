@@ -5,6 +5,8 @@ export default class FinancialYearWidget extends React.Component {
     if (this.props.value) {
       if (this.props.value[4] === "/") {
         return this.props.value.split("/")[0];
+      } else if (this.props.value[2] === "/") {
+        return "20"+this.props.value.split("/")[0];
       } else {
         return this.props.value.split("-")[0]-1;
       }

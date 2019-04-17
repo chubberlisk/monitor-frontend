@@ -20,6 +20,11 @@ describe("<FinancialYearWidget>", () => {
         expect(wrap.find("[data-test='start-year']").props().value).toEqual("2020");
       });
 
+      it("Given the short legacy format", () => {
+        let wrap = mount(<FinancialYearWidget value="20/21" onChange={() => {}}/>);
+        expect(wrap.find("[data-test='start-year']").props().value).toEqual("2020");
+      });
+
       it("Given no value", () => {
         let wrap = mount(<FinancialYearWidget onChange={() => {}}/>);
         expect(wrap.find("[data-test='start-year']").props().value).toEqual("");
@@ -65,6 +70,11 @@ describe("<FinancialYearWidget>", () => {
       it("Given the legacy format", () => {
         let wrap = mount(<FinancialYearWidget value="1990/91" onChange={() => {}}/>);
         expect(wrap.find("[data-test='start-year']").props().value).toEqual("1990");
+      });
+
+      it("Given the short legacy format", () => {
+        let wrap = mount(<FinancialYearWidget value="03/04" onChange={() => {}}/>);
+        expect(wrap.find("[data-test='start-year']").props().value).toEqual("2003");
       });
 
       it("Given a very incomplete year", () => {
