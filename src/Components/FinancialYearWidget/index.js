@@ -1,22 +1,29 @@
 import React from 'react';
 
 export default class FinancialYearWidget extends React.Component {
+  cleanValueString = (value) =>
+    value.replace(/[^0-9/-]/g, "");
+
   getDisplayYear = () => {
     if (this.props.value) {
-      if (this.props.value[4] === "/") {
-        return this.props.value.split("/")[0];
-      } else if (this.props.value[2] === "/") {
-        return "20"+this.props.value.split("/")[0];
+      let value = this.cleanValueString(this.props.value);
+      if (value[4] === "/") {
+        return value.split("/")[0];
+      } else if (value[2] === "/") {
+        return "20"+value.split("/")[0];
       } else {
-        return this.props.value.split("-")[0]-1;
+        return value.split("-")[0]-1;
       }
     }
 
     return "";
   }
 
+  cleanInputString = (value) =>
+    value.replace(/[^0-9]/g, "");
+
   getFinancialYearEnd = (startYear) =>
-    `${Number(startYear)+1}-03-31`
+    `${Number(this.cleanInputString(startYear))+1}-03-31`
 
   onChange = (e) => {
     this.props.onChange(this.getFinancialYearEnd(e.target.value));

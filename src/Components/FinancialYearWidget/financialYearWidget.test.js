@@ -5,6 +5,11 @@ import FinancialYearWidget from '.';
 describe("<FinancialYearWidget>", () => {
   describe("Example 1", () => {
     describe("Sets the input box value", () => {
+      it("Given a year with an invalid format", () => {
+        let wrap = mount(<FinancialYearWidget value="19x$-03-31" onChange={() => {}}/>);
+        expect(wrap.find("[data-test='start-year']").props().value).toEqual("18");
+      });
+
       it("Given a year", () => {
         let wrap = mount(<FinancialYearWidget value="2021-03-31" onChange={() => {}}/>);
         expect(wrap.find("[data-test='start-year']").props().value).toEqual("2020");
@@ -40,6 +45,15 @@ describe("<FinancialYearWidget>", () => {
           .simulate("change", {target: {value: "2020"}});
         expect(onChangeSpy).toHaveBeenCalledWith("2021-03-31");
       });
+
+      it("Cleans the string", () => {
+        let onChangeSpy = jest.fn();
+        let wrap = mount(<FinancialYearWidget onChange={onChangeSpy}/>);
+        wrap
+          .find("[data-test='start-year']")
+          .simulate("change", {target: {value: "**{}()"}});
+        expect(onChangeSpy).toHaveBeenCalledWith("1-03-31");
+      });
     });
 
     describe("Displays end year", () => {
@@ -62,6 +76,11 @@ describe("<FinancialYearWidget>", () => {
 
   describe("Example 2", () => {
     describe("Sets the input box value", () => {
+      it("Given a year with an invalid format", () => {
+        let wrap = mount(<FinancialYearWidget value="199a-03-31" onChange={() => {}}/>);
+        expect(wrap.find("[data-test='start-year']").props().value).toEqual("198");
+      });
+
       it("Given a year", () => {
         let wrap = mount(<FinancialYearWidget value="1990-03-31" onChange={() => {}}/>);
         expect(wrap.find("[data-test='start-year']").props().value).toEqual("1989");
@@ -91,6 +110,15 @@ describe("<FinancialYearWidget>", () => {
           .find("[data-test='start-year']")
           .simulate("change", {target: {value: "1989"}});
         expect(onChangeSpy).toHaveBeenCalledWith("1990-03-31");
+      });
+
+      it("Cleans the string", () => {
+        let onChangeSpy = jest.fn();
+        let wrap = mount(<FinancialYearWidget onChange={onChangeSpy}/>);
+        wrap
+          .find("[data-test='start-year']")
+          .simulate("change", {target: {value: "19x#"}});
+        expect(onChangeSpy).toHaveBeenCalledWith("20-03-31");
       });
     });
 
