@@ -563,7 +563,7 @@ describe("AmendProjectPage", () => {
   });
 
   describe("calls the submit and updates project use cases", () => {
-    it("example 1", async () => {
+    fit("example 1", async () => {
       let userRoleUseCaseSpy = { execute: jest.fn(() => ({role: "Homes England"})) };
       let submitBaselineSpy = {
         execute: jest.fn(async (presenter, id) => {
@@ -589,7 +589,7 @@ describe("AmendProjectPage", () => {
           timestamp={"1234"}
         />
       );
-      let request = {projectId: 1, data: {}, timestamp: "1234"}
+      let request = {projectId: 1, data: {"cat":{"catA":{}}}, timestamp: "1234"}
       wrap.find('[data-test="submit-project-button"]').simulate("click");
       await wait();
       expect(updateProjectSpy.execute).toBeCalledWith(expect.anything(), request);
