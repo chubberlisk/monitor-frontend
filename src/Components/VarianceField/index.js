@@ -133,7 +133,7 @@ export default class VarianceField extends React.Component {
   );
 
   renderDelayed = () => (
-      <div className="row">
+      <div className="">
          {this.renderCurrentValue()}
          {this.renderReason()}
       </div>
@@ -218,7 +218,7 @@ export default class VarianceField extends React.Component {
   };
 
   renderCompleted = () => (
-    <div className="row">
+    <div className="">
       {this.renderCompletedDate()}
       {this.renderReference()}
       {this.renderContractorName()}
@@ -296,12 +296,12 @@ export default class VarianceField extends React.Component {
 
   renderBody = () => (
     <div className="panel-body">
-      <div className="row">
+      <div className="">
         {this.renderBaseline()}
         {this.renderBaselineVariance()}
         {this.renderReturnVariance()}
       </div>
-      <div className="row">
+      <div className="">
         {this.renderStatus()}
         {this.renderPercentComplete()}
       </div>

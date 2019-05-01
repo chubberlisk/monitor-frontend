@@ -129,7 +129,7 @@ export default class RiskField extends React.Component {
     if(this.state.riskMet !== "Yes") return null;
     return (
       <div className="col-md-6">
-        <div className="row">
+        <div className="">
           <div className="col-md-12">
             <label
               htmlFor="completionDate"
@@ -140,7 +140,7 @@ export default class RiskField extends React.Component {
             </label>
           </div>
         </div>
-        <div className="row">
+        <div className="">
           <div className="col-md-12">
             <this.props.registry.widgets.britishDate
               onChange={e => this.onFieldChange("riskCompletionDate", e)}
@@ -189,10 +189,10 @@ export default class RiskField extends React.Component {
 
   renderBody = () => (
     <div className="panel-body">
-      <div className="row">
+      <div className="">
         <div className="col-md-6">
           {this.renderRiskDescription()}
-          <div className="row">
+          <div className="">
             {this.renderRiskBaselineImpact()}
             {this.renderRiskLikelihood()}
             <div className="col-md-6" />
@@ -200,8 +200,8 @@ export default class RiskField extends React.Component {
         </div>
         {this.renderRiskMitigationInPlace()}
       </div>
-      <div className="row">&nbsp;</div>
-      <div className="row">
+      <div className="">&nbsp;</div>
+      <div className="">
         {this.renderRiskMet()}
         {this.renderCurrentReturnLikelihood()}
         {this.renderChangeInRisk()}

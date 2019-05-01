@@ -3,7 +3,7 @@ import React from "react";
 export default class AddButton extends React.Component {
   render() {
     return (
-      <div className="row">
+      <div className="">
         <div className="pull-right">
           <button
             data-test="add-button"

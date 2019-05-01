@@ -232,7 +232,7 @@ export default class AmendProjectPage extends React.Component {
     if (this.props.status === "Submitted") {
       return this.props.children({status: "Submitted"})
     } else {
-      return <div className="row">
+      return <div className="">
         {this.renderSubmitButton()}
         {this.renderSaveButton()}
       </div>
@@ -351,7 +351,7 @@ export default class AmendProjectPage extends React.Component {
     return (
       <div>
         <div className="title-container">
-          <div className="row">
+          <div className="">
             <h2>Baseline Editor</h2>
           </div>
         </div>

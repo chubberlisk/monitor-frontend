@@ -16,7 +16,7 @@ export default class AmendBaselineButton extends React.Component {
   render = () => {
     if (this.props.status === 'Submitted') {
       return (
-        <div className="row">
+        <div className="">
           <div className="col-md-10"></div>
           <div className="col-md-2">
           <button

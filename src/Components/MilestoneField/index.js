@@ -214,7 +214,7 @@ export default class MilestoneField extends React.Component {
       return (
         <div>
           <b>Variance (Weeks)</b>
-          <div className="row">
+          <div className="">
             <div className="col-sm-6">
               <span>Baseline: </span>
               <span data-test="milestone-baselineVariance">
@@ -278,7 +278,7 @@ export default class MilestoneField extends React.Component {
   renderBody() {
     return (
       <div className="panel-body">
-        <div className="row">
+        <div className="">
           <div className="col-md-6">
             {this.renderMilestoneDescription()}
             {this.renderMilestoneTargetDate()}
@@ -288,11 +288,11 @@ export default class MilestoneField extends React.Component {
             {this.renderMilestonePercentCompleted()}
           </div>
         </div>
-        <div className="row">
+        <div className="">
           <div className="col-md-6">{this.renderStatusAgainstLastReturn()}</div>
           <div className="col-md-6">{this.renderVariances()}</div>
         </div>
-        <div className="row">
+        <div className="">
           <div className="col-md-6">{this.renderDate()}</div>
           <div className="col-md-6">{this.renderReasonForVariance()}</div>
         </div>

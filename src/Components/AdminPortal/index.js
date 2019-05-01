@@ -392,8 +392,8 @@ export default class AdminPortal extends React.Component {
     if (this.props.getRole.execute().role === "Superuser") {
       return (
         <div data-test="admin">
-          <div className="row">{this.renderMessage()}</div>
-          <div className="row">
+          <div className="">{this.renderMessage()}</div>
+          <div className="">
             <div className="col-sm-6">{this.renderCreateProject()}</div>
             <div className="col-sm-6">{this.renderAddUsers()}</div>
           </div>

@@ -314,7 +314,7 @@ const renderAmendBaselinePage = props => (
       <div>
       <BackToProjectOverviewButton {...props} />
       <div className="col-md-10 col-offset-1">
-        <div className="row">
+        <div className="">
           <AmendProjectPage
             {...props}
             projectId={props.match.params.projectId}
@@ -349,18 +349,18 @@ const renderAmendBaselinePage = props => (
 
 const renderNewProjectPageOverview = (props, projectType) => (
   <div className="col-md-10 col-md-offset-1">
-    <div className="row">
+    <div className="">
       <h1>{projectType === "ac" && "Accelerated Construction"}</h1>
       <h1>{projectType === "hif" && "Marginal Viability Fund"}</h1>
       <h1>{projectType === "ff" && "Forward Funding"}</h1>
     </div>
-    <div className="row">
+    <div className="">
       <h4>This is where we will create the primary profile for your project.</h4>
     </div>
-    <div className="row">
+    <div className="">
       <EditInfrastructuresButton {...props} type={projectType} />
     </div>
-    <div className="row">
+    <div className="">
       <FillInBaselineButton {...props} />
     </div>
   </div>
@@ -368,45 +368,46 @@ const renderNewProjectPageOverview = (props, projectType) => (
 
 
 const renderSubmittedProjectPage = (props, formData, baselines, claims, returns) => (
-  <div className="col-md-10 col-md-offset-1" data-test="submitted-project-page">
-    <ProjectSummary data={formData} />
-    <div className="row">
-      <div className="col-md-2">
-        <CreateReturnButton {...props} />
+  <div className="container-fluid">
+    <div className="col-md-10 col-md-offset-1" data-test="submitted-project-page">
+      <ProjectSummary data={formData} />
+      <div className="row">
+        <div className="col-md-2">
+          <CreateReturnButton {...props} />
+        </div>
+        <div className="col-md-2">
+          <CreateClaimButton {...props} />
+        </div>
+        <div className="col-md-2">
+          <ViewBaselineButton {...props} />
+        </div>
       </div>
-      <div className="col-md-2">
-        <CreateClaimButton {...props} />
-      </div>
-
-      <div className="col-md-2">
-        <ViewBaselineButton {...props} />
-      </div>
-    </div>
-    <div className="row">
-      <div className="col-md-4">
-        <List
-          {...props}
-          items={baselines}
-          listType={"baseline"}
-          prettyListType={"Baseline Version"}
-        />
-      </div>
-      <div className="col-md-4">
-        <List
-          {...props}
-          data-test="return-list"
-          items={returns}
-          listType={"return"}
-          prettyListType={"Return"}
-        />
-      </div>
-      <div className="col-md-4">
-        <List
-          {...props}
-          items={claims}
-          listType={"claim"}
-          prettyListType={"Claim"}
-        />
+      <div className="row">
+        <div className="col-md-4">
+          <List
+            {...props}
+            items={baselines}
+            listType={"baseline"}
+            prettyListType={"Baseline Version"}
+          />
+        </div>
+        <div className="col-md-4">
+          <List
+            {...props}
+            data-test="return-list"
+            items={returns}
+            listType={"return"}
+            prettyListType={"Return"}
+          />
+        </div>
+        <div className="col-md-4">
+          <List
+            {...props}
+            items={claims}
+            listType={"claim"}
+            prettyListType={"Claim"}
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -435,8 +436,8 @@ const renderBaseline = props => (
       }
       return <div>
           <BackToProjectOverviewButton {...props} />
-        <div className="row">
-          <div className="col-md-10">
+        <div className="">
+          <div className="">
             <h2>Baseline</h2>
           </div>
         </div>
@@ -445,7 +446,7 @@ const renderBaseline = props => (
           status={projectStatus}
           amendBaseline={amendBaseline}
         />
-        <div className="row">
+        <div className="">
           <BaselinePage
             {...props}
             projectId={props.match.params.projectId}
@@ -482,7 +483,7 @@ const renderPrintPage = props => (
 
 const renderhomepage = props => (
   <div className="homepage">
-    <div className="row">
+    <div className="container-fluid">
       <div className="col-md-2"/>
       <div className="col-md-8">
         <h1>Homes England Monitor</h1>
@@ -492,7 +493,7 @@ const renderhomepage = props => (
       </div>
       <div className="col-md-2" />
     </div>
-    <div className="row">
+    <div className="">
       <div className="col-md-2" />
       <div className="col-md-8">
         <AdminPortal

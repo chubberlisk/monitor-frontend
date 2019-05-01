@@ -269,7 +269,7 @@ export default class BaselinePage extends React.Component {
           {this.renderSubmissionFailure()}
           {this.renderSaveFailure()}
           {this.renderSaveSuccess()}
-          <div className="row">
+          <div className="">
             {this.renderButtons()}
           </div>
           <div className="row no-edge">{this.renderForm()}</div>

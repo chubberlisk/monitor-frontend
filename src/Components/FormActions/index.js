@@ -368,10 +368,10 @@ export default class FormActions extends React.Component {
   render() {
     return (
       <div>
-        <div className="row">
+        <div className="">
           {this.renderFailures()}
         </div>
-        <div className="row">
+        <div className="">
           <ErrorMessage
             validationSuccess={this.state.validationSuccess}
             valid={this.state.valid}
@@ -380,7 +380,7 @@ export default class FormActions extends React.Component {
           />
           {this.renderSuccessAlert()}
         </div>
-        <div className="row no-edge">
+        <div className="">
           {(this.state.status !== "Submitted" ||
             this.state.lastAction !== "Submit") && (
             <div data-test="return" className="return col-md-12">
