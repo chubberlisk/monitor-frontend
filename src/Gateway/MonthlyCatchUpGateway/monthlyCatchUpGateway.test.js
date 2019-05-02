@@ -100,7 +100,10 @@ describe("MonthlyCatchUpGateway", () => {
             apiKeyGateway: apiKeyGatewayStub
           });
 
-          response = await gateway.create(1, { cat: "meow" });
+          response = await gateway.create({
+            projectId: 1,
+            data: { cat: "meow" }
+          });
         });
 
         it("Passes the data and the project id to the api", async () => {
@@ -126,7 +129,10 @@ describe("MonthlyCatchUpGateway", () => {
           let gateway = new MonthlyCatchUpGateway({
             apiKeyGateway: apiKeyGatewayStub
           });
-          let response = await gateway.create(1, { cat: "meow" });
+          let response = await gateway.create({
+            projectId: 1,
+            data: { cat: "meow" }
+          });
 
           expect(response.successful).toEqual(false);
         });
@@ -158,7 +164,10 @@ describe("MonthlyCatchUpGateway", () => {
             apiKeyGateway: apiKeyGatewayStub
           });
 
-          response = await gateway.create(2, { dog: "woof" });
+          response = await gateway.create({
+            projectId: 2,
+            data: { dog: "woof" }
+          });
         });
 
         it("Passes the data and the project id to the api", async () => {
@@ -188,7 +197,10 @@ describe("MonthlyCatchUpGateway", () => {
           let gateway = new MonthlyCatchUpGateway({
             apiKeyGateway: apiKeyGatewayStub
           });
-          let response = await gateway.create(2, { dog: "woof" });
+          let response = await gateway.create({
+            projectId: 2,
+            data: { dog: "woof" }
+          });
 
           expect(response.successful).toEqual(false);
         });

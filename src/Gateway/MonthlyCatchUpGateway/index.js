@@ -7,7 +7,7 @@ export default class MonthlyCatchUpGateway {
     this.env = runtimeEnv();
   }
 
-  async create(projectId, data) {
+  async create({ projectId, data }) {
     let response = await fetch(
       `${this.env.REACT_APP_HIF_API_URL}monthly-catch-up/create`,
       {
