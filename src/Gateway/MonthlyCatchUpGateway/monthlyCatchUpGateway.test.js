@@ -2,56 +2,16 @@ import nock from "nock";
 import MonthlyCatchUpGateway from ".";
 
 describe("MonthlyCatchUpGateway", () => {
+  let apiKeyGatewayStub, request, gateway, response;
+
   describe("#Create", () => {
     describe("Example one", () => {
-      it("Passes the data and the project id to the api", async () => {
-        let apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "meowKey" }) };
-
-        process.env.REACT_APP_HIF_API_URL = "https://meow.cat/";
-        let request = nock("https://meow.cat/")
-          .matchHeader("Content-Type", "application/json")
-          .post("/monthly-catch-up/create", {
-            project_id: 1,
-            data: { cat: "meow" }
-          })
-          .reply(200, { id: 10 });
-
-        let gateway = new MonthlyCatchUpGateway({
-          apiKeyGateway: apiKeyGatewayStub
-        });
-
-        await gateway.create(1, { cat: "meow" });
-
-        expect(request.isDone()).toBeTruthy();
-      });
-
-      it("Passes the API key to the URL", async () => {
-        let apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "meowKey" }) };
-
-        process.env.REACT_APP_HIF_API_URL = "https://meow.cat/";
-        let request = nock("https://meow.cat/")
-          .matchHeader("Content-Type", "application/json")
-          .matchHeader("API_KEY", "meowKey")
-          .post("/monthly-catch-up/create", {
-            project_id: 1,
-            data: { cat: "meow" }
-          })
-          .reply(200, { id: 10 });
-
-        let gateway = new MonthlyCatchUpGateway({
-          apiKeyGateway: apiKeyGatewayStub
-        });
-        await gateway.create(1, { cat: "meow" });
-
-        expect(request.isDone()).toBeTruthy();
-      });
-
       describe("Given it is successful", () => {
-        it("Returns successful with the created id", async () => {
-          let apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "meowKey" }) };
-
+        beforeEach(async () => {
           process.env.REACT_APP_HIF_API_URL = "https://meow.cat/";
-          let request = nock("https://meow.cat/")
+          apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "meowKey" }) };
+
+          request = nock("https://meow.cat/")
             .matchHeader("Content-Type", "application/json")
             .matchHeader("API_KEY", "meowKey")
             .post("/monthly-catch-up/create", {
@@ -60,13 +20,24 @@ describe("MonthlyCatchUpGateway", () => {
             })
             .reply(200, { id: 10 });
 
-          let gateway = new MonthlyCatchUpGateway({
+          gateway = new MonthlyCatchUpGateway({
             apiKeyGateway: apiKeyGatewayStub
           });
-          let response = await gateway.create(1, { cat: "meow" });
 
+          response = await gateway.create(1, { cat: "meow" });
+        });
+
+        it("Passes the data and the project id to the api", async () => {
+          expect(request.isDone()).toBeTruthy();
+        });
+
+        it("Passes the API key to the URL", async () => {
+          expect(request.isDone()).toBeTruthy();
+        });
+
+        it("Returns successful with the created id", async () => {
           expect(response.successful).toEqual(true);
-          expect(response.monthlyCatchUpId).toEqual(10)
+          expect(response.monthlyCatchUpId).toEqual(10);
         });
       });
 
@@ -95,70 +66,35 @@ describe("MonthlyCatchUpGateway", () => {
     });
 
     describe("Example two", () => {
-      it("Passes the data and the project id to the api", async () => {
-        let apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "meowKey" }) };
-
-        process.env.REACT_APP_HIF_API_URL = "https://woof.dog/";
-        let request = nock("https://woof.dog/")
-          .matchHeader("Content-Type", "application/json")
-          .post("/monthly-catch-up/create", {
-            project_id: 2,
-            data: { dog: "woof" }
-          })
-          .reply(200, { id: 11 });
-
-        let gateway = new MonthlyCatchUpGateway({
-          apiKeyGateway: apiKeyGatewayStub
-        });
-
-        await gateway.create(2, { dog: "woof" });
-
-        expect(request.isDone()).toBeTruthy();
-      });
-
-      it("Passes the API key to the URL", async () => {
-        let apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "woofKey" }) };
-
-        process.env.REACT_APP_HIF_API_URL = "https://woof.dog/";
-        let request = nock("https://woof.dog/")
-          .matchHeader("Content-Type", "application/json")
-          .matchHeader("API_KEY", "woofKey")
-          .post("/monthly-catch-up/create", {
-            project_id: 2,
-            data: { dog: "woof" }
-          })
-          .reply(200, { id: 11 });
-
-        let gateway = new MonthlyCatchUpGateway({
-          apiKeyGateway: apiKeyGatewayStub
-        });
-
-        await gateway.create(2, { dog: "woof" });
-
-        expect(request.isDone()).toBeTruthy();
-      });
-
       describe("Given it is successful", () => {
-        it("Returns successful with the created id", async () => {
-          let apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "dogKey" }) };
-
+        beforeEach(async () => {
+          apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "woofKey" }) };
           process.env.REACT_APP_HIF_API_URL = "https://woof.dog/";
-          let request = nock("https://woof.dog/")
+          request = nock("https://woof.dog/")
             .matchHeader("Content-Type", "application/json")
-            .matchHeader("API_KEY", "dogKey")
+            .matchHeader("API_KEY", "woofKey")
             .post("/monthly-catch-up/create", {
               project_id: 2,
               data: { dog: "woof" }
             })
             .reply(200, { id: 11 });
+            gateway = new MonthlyCatchUpGateway({
+              apiKeyGateway: apiKeyGatewayStub
+            });
+            response = await gateway.create(2, { dog: "woof" });
+        });
 
-          let gateway = new MonthlyCatchUpGateway({
-            apiKeyGateway: apiKeyGatewayStub
-          });
-          let response = await gateway.create(2, { dog: "woof" });
+        it("Passes the data and the project id to the api", async () => {
+          expect(request.isDone()).toBeTruthy();
+        });
 
+        it("Passes the API key to the URL", async () => {
+          expect(request.isDone()).toBeTruthy();
+        });
+
+        it("Returns successful with the created id", async () => {
           expect(response.successful).toEqual(true);
-          expect(response.monthlyCatchUpId).toEqual(11)
+          expect(response.monthlyCatchUpId).toEqual(11);
         });
       });
 

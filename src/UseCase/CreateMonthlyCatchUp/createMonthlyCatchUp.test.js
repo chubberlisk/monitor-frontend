@@ -1,46 +1,35 @@
 import CreateMonthlyCatchUp from ".";
 
 describe("CreateMonthlyCatchUp", () => {
+  let monthlyCatchUpStub, presenterSpy, useCase;
+
   describe("Example one", () => {
-    it("Calls the create method on the monthly catch up gateway", async () => {
-      let monthlyCatchUpSpy = {
-        create: jest.fn(() => ({ success: true, monthlyCatchUpId: 42 }))
-      };
-      let presenterStub = {
-        presentCreatedCatchUp: () => {}
-      };
-      let useCase = new CreateMonthlyCatchUp({
-        monthlyCatchUpGateway: monthlyCatchUpSpy
-      });
-
-      await useCase.execute(presenterStub, {
-        projectId: 1,
-        data: { cat: "meow" }
-      });
-
-      expect(monthlyCatchUpSpy.create).toHaveBeenCalledWith(1, { cat: "meow" });
-    });
-
     describe("Given creation is successful", () => {
-      it("Calls creation successful on the presenter", async () => {
-        let monthlyCatchUpStub = {
-          create: () => ({ success: true, monthlyCatchUpId: 10 })
+      beforeEach(async () => {
+        monthlyCatchUpStub = {
+          create: jest.fn(() => ({ success: true, monthlyCatchUpId: 42 }))
         };
-        let presenterSpy = {
+        presenterSpy = {
           presentCreatedCatchUp: jest.fn()
         };
-
-        let useCase = new CreateMonthlyCatchUp({
+        useCase = new CreateMonthlyCatchUp({
           monthlyCatchUpGateway: monthlyCatchUpStub
         });
-
         await useCase.execute(presenterSpy, {
           projectId: 1,
           data: { cat: "meow" }
         });
+      });
 
+      it("Calls the create method on the monthly catch up gateway", async () => {
+        expect(monthlyCatchUpStub.create).toHaveBeenCalledWith(1, {
+          cat: "meow"
+        });
+      });
+
+      it("Calls creation successful on the presenter", async () => {
         expect(presenterSpy.presentCreatedCatchUp).toHaveBeenCalledWith({
-          monthlyCatchUpId: 10
+          monthlyCatchUpId: 42
         });
       });
     });
@@ -50,9 +39,11 @@ describe("CreateMonthlyCatchUp", () => {
         let monthlyCatchUpStub = {
           create: () => ({ success: false })
         };
+
         let presenterSpy = {
           presentUnsuccessfulCreation: jest.fn()
         };
+
         let useCase = new CreateMonthlyCatchUp({
           monthlyCatchUpGateway: monthlyCatchUpStub
         });
@@ -68,42 +59,28 @@ describe("CreateMonthlyCatchUp", () => {
   });
 
   describe("Example two", () => {
-    it("Calls the create method on the monthly catch up gateway", async () => {
-      let monthlyCatchUpSpy = {
-        create: jest.fn(() => ({ success: true, monthlyCatchUpId: 42 }))
-      };
-      let useCase = new CreateMonthlyCatchUp({
-        monthlyCatchUpGateway: monthlyCatchUpSpy
-      });
-      let presenterStub = {
-        presentCreatedCatchUp: () => {}
-      };
-
-      await useCase.execute(presenterStub, {
-        projectId: 2,
-        data: { dog: "woof" }
-      });
-
-      expect(monthlyCatchUpSpy.create).toHaveBeenCalledWith(2, { dog: "woof" });
-    });
-
     describe("Given creation is successful", () => {
-      it("Calls creation successful on the presenter", async () => {
-        let monthlyCatchUpStub = {
-          create: () => ({ success: true, monthlyCatchUpId: 42 })
+      beforeEach(async () => {
+        monthlyCatchUpStub = {
+          create: jest.fn(() => ({ success: true, monthlyCatchUpId: 42 }))
         };
-        let presenterSpy = {
-          presentCreatedCatchUp: jest.fn()
-        };
-        let useCase = new CreateMonthlyCatchUp({
+        useCase = new CreateMonthlyCatchUp({
           monthlyCatchUpGateway: monthlyCatchUpStub
         });
-
+        presenterSpy = {
+          presentCreatedCatchUp: jest.fn()
+        };
         await useCase.execute(presenterSpy, {
           projectId: 2,
           data: { dog: "woof" }
         });
+      });
 
+      it("Calls the create method on the monthly catch up gateway", async () => {
+        expect(monthlyCatchUpStub.create).toHaveBeenCalledWith(2, { dog: "woof" });
+      });
+
+      it("Calls creation successful on the presenter", async () => {
         expect(presenterSpy.presentCreatedCatchUp).toHaveBeenCalledWith({
           monthlyCatchUpId: 42
         });
