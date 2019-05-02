@@ -44,6 +44,31 @@ class MonthlyCatchUpApiSimulator {
 
     return new APIResponse(request, response);
   }
+
+  updateMonthlyCatchUp({ projectId, monthlyCatchUpId, data, response }) {
+    let request = nock(this.baseUrl)
+      .matchHeader("Content-Type", "application/json")
+      .matchHeader("API_KEY", this.apiKey)
+      .post("/monthly-catch-up/update", {
+        project_id: projectId,
+        monthly_catchup_id: monthlyCatchUpId,
+        data
+      });
+
+    return new APIResponse(request, response);
+  }
+
+  submitMonthlyCatchUp({ projectId, monthlyCatchUpId, response }) {
+    let request = nock(this.baseUrl)
+      .matchHeader("Content-Type", "application/json")
+      .matchHeader("API_KEY", this.apiKey)
+      .post("/monthly-catch-up/submit", {
+        project_id: projectId,
+        monthly_catchup_id: monthlyCatchUpId
+      });
+
+    return new APIResponse(request, response);
+  }
 }
 
 describe("MonthlyCatchUpGateway", () => {
@@ -121,7 +146,7 @@ describe("MonthlyCatchUpGateway", () => {
 
       describe("Given it is successful", () => {
         beforeEach(async () => {
-          simulator
+          request = simulator
             .createMonthlyCatchUp({
               projectId: 2,
               data: { dog: "woof" },
@@ -297,6 +322,140 @@ describe("MonthlyCatchUpGateway", () => {
           response = await gateway.findById({
             projectId: 5,
             monthlyCatchUpId: 7
+          });
+
+          expect(response.successful).toBeFalsy();
+        });
+      });
+    });
+  });
+
+  describe("#Update", () => {
+    describe("Example one", () => {
+      beforeEach(async () => {
+        process.env.REACT_APP_HIF_API_URL = "https://meow.cat/";
+        apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "meowKey" }) };
+
+        simulator = new MonthlyCatchUpApiSimulator({
+          baseUrl: "https://meow.cat",
+          apiKey: "meowKey"
+        });
+
+        request = simulator
+          .updateMonthlyCatchUp({
+            projectId: 1,
+            monthlyCatchUpId: 1,
+            data: { cat: "meow" },
+            response: {}
+          })
+          .successfully();
+
+        gateway = new MonthlyCatchUpGateway({
+          apiKeyGateway: apiKeyGatewayStub
+        });
+
+        response = await gateway.update({
+          projectId: 1,
+          monthlyCatchUpId: 1,
+          data: { cat: "meow" }
+        });
+      });
+
+      describe("Given it is successful", () => {
+        it("Updates the catch up from the API", async () => {
+          expect(request.isDone()).toBeTruthy();
+        });
+  
+        it("Returns successful with the monthly catch up", async () => {
+          expect(response.successful).toBeTruthy();
+        });
+      });
+
+      describe("Given it is unsuccessful", () => {
+        it("Returns unsuccessful", async () => {
+          simulator
+            .updateMonthlyCatchUp({
+              projectId: 1,
+              monthlyCatchUpId: 1,
+              data: { cat: "meow" },
+              response: {}
+            })
+            .unsuccessfully();
+
+          gateway = new MonthlyCatchUpGateway({
+            apiKeyGateway: apiKeyGatewayStub
+          });
+
+          response = await gateway.update({
+            projectId: 1,
+            monthlyCatchUpId: 1,
+            data: { cat: "meow" }
+          });
+
+          expect(response.successful).toBeFalsy();
+        });
+      });
+    });
+
+    describe("Example two", () => {
+      beforeEach(async () => {
+        process.env.REACT_APP_HIF_API_URL = "https://woof.dog/";
+        apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "woofKey" }) };
+
+        simulator = new MonthlyCatchUpApiSimulator({
+          baseUrl: "https://woof.dog",
+          apiKey: "woofKey"
+        });
+
+        request = simulator
+          .updateMonthlyCatchUp({
+            projectId: 101,
+            monthlyCatchUpId: 99,
+            data: { dog: "woof" },
+            response: {}
+          })
+          .successfully();
+
+        gateway = new MonthlyCatchUpGateway({
+          apiKeyGateway: apiKeyGatewayStub
+        });
+
+        response = await gateway.update({
+          projectId: 101,
+          monthlyCatchUpId: 99,
+          data: { dog: "woof" }
+        });
+      });
+
+      describe("Given it is successful", () => {
+        it("Updates the catch up from the API", async () => {
+          expect(request.isDone()).toBeTruthy();
+        });
+  
+        it("Returns successful with the monthly catch up", async () => {
+          expect(response.successful).toBeTruthy();
+        });
+      });
+
+      describe("Given it is unsuccessful", () => {
+        it("Returns unsuccessful", async () => {
+          simulator
+            .updateMonthlyCatchUp({
+              projectId: 101,
+              monthlyCatchUpId: 99,
+              data: { dog: "woof" },
+              response: {}
+            })
+            .unsuccessfully();
+
+          gateway = new MonthlyCatchUpGateway({
+            apiKeyGateway: apiKeyGatewayStub
+          });
+
+          response = await gateway.update({
+            projectId: 101,
+            monthlyCatchUpId: 99,
+            data: { dog: "woof" }
           });
 
           expect(response.successful).toBeFalsy();
