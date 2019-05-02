@@ -78,10 +78,10 @@ describe("MonthlyCatchUpGateway", () => {
               data: { dog: "woof" }
             })
             .reply(200, { id: 11 });
-            gateway = new MonthlyCatchUpGateway({
-              apiKeyGateway: apiKeyGatewayStub
-            });
-            response = await gateway.create(2, { dog: "woof" });
+          gateway = new MonthlyCatchUpGateway({
+            apiKeyGateway: apiKeyGatewayStub
+          });
+          response = await gateway.create(2, { dog: "woof" });
         });
 
         it("Passes the data and the project id to the api", async () => {
@@ -118,6 +118,132 @@ describe("MonthlyCatchUpGateway", () => {
           let response = await gateway.create(2, { dog: "woof" });
 
           expect(response.successful).toEqual(false);
+        });
+      });
+    });
+  });
+
+  describe("#FindById", () => {
+    describe("Example one", () => {
+      describe("Given a monthly catch up is found", () => {
+        beforeEach(async () => {
+          apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "meowKey" }) };
+          process.env.REACT_APP_HIF_API_URL = "https://cat.meow/";
+          request = nock("https://cat.meow/")
+            .matchHeader("Content-Type", "application/json")
+            .matchHeader("API_KEY", "meowKey")
+            .get("/monthly-catch-up/get?id=1&monthly_catchup_id=1")
+            .reply(200, {
+              data: { cat: "meow" },
+              schema: { cate: "meow meow" },
+              status: "Draft"
+            });
+
+          gateway = new MonthlyCatchUpGateway({
+            apiKeyGateway: apiKeyGatewayStub
+          });
+
+          response = await gateway.findById({
+            projectId: 1,
+            monthlyCatchUpId: 1
+          });
+        });
+
+        it("Gets the catch up from the API", () => {
+          expect(request.isDone()).toBeTruthy();
+        });
+
+        it("Returns successful with the monthly catch up", async () => {
+          expect(response.successful).toBeTruthy();
+          expect(response.monthlyCatchUp).toEqual({
+            data: { cat: "meow" },
+            schema: { cate: "meow meow" },
+            status: "Draft"
+          });
+        });
+
+        it("Returns unsuccessful", async () => {
+          apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "meowKey" }) };
+          process.env.REACT_APP_HIF_API_URL = "https://cat.meow/";
+          request = nock("https://cat.meow/")
+            .matchHeader("Content-Type", "application/json")
+            .matchHeader("API_KEY", "meowKey")
+            .get("/monthly-catch-up/get?id=1&monthly_catchup_id=1")
+            .reply(404);
+
+          gateway = new MonthlyCatchUpGateway({
+            apiKeyGateway: apiKeyGatewayStub
+          });
+
+          response = await gateway.findById({
+            projectId: 1,
+            monthlyCatchUpId: 1
+          });
+
+          expect(response.successful).toBeFalsy();
+        });
+      });
+    });
+
+    describe("Example two", () => {
+      describe("Given a monthly catch up is found", () => {
+        beforeEach(async () => {
+          apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "dogs4lyf" }) };
+          process.env.REACT_APP_HIF_API_URL = "https://dog.life/";
+          request = nock("https://dog.life/")
+            .matchHeader("Content-Type", "application/json")
+            .matchHeader("API_KEY", "dogs4lyf")
+            .get("/monthly-catch-up/get?id=5&monthly_catchup_id=7")
+            .reply(200, {
+              data: { dog: "woof" },
+              schema: { dogs: "woof woof" },
+              status: "Submitted"
+            });
+
+          gateway = new MonthlyCatchUpGateway({
+            apiKeyGateway: apiKeyGatewayStub
+          });
+
+          response = await gateway.findById({
+            projectId: 5,
+            monthlyCatchUpId: 7
+          });
+        });
+
+        it("Gets the catch up from the API", () => {
+          expect(request.isDone()).toBeTruthy();
+        });
+
+        it("Returns successful with the monthly catch up", async () => {
+          expect(response.successful).toBeTruthy();
+          expect(response.monthlyCatchUp).toEqual({
+            data: { dog: "woof" },
+            schema: { dogs: "woof woof" },
+            status: "Submitted"
+          });
+        });
+      });
+
+      describe("Given a monthly catch up is not found", () => {
+        it("Returns unsuccessful", async () => {
+          apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "dogs4lyf" }) };
+          process.env.REACT_APP_HIF_API_URL = "https://dog.life/";
+          request = nock("https://dog.life/")
+            .matchHeader("Content-Type", "application/json")
+            .matchHeader("API_KEY", "dogs4lyf")
+            .get("/monthly-catch-up/get?id=5&monthly_catchup_id=7")
+            .reply(404);
+
+          gateway = new MonthlyCatchUpGateway({
+            apiKeyGateway: apiKeyGatewayStub
+          });
+
+          response = await gateway.findById({
+            projectId: 5,
+            monthlyCatchUpId: 7
+          });
+
+          expect(response.successful).toBeFalsy();
         });
       });
     });
