@@ -80,4 +80,26 @@ export default class MonthlyCatchUpGateway {
     }
     return { successful: false };
   }
+
+  async submit({ projectId, monthlyCatchUpId }) {
+    let response = await fetch(
+      `${this.env.REACT_APP_HIF_API_URL}monthly-catch-up/submit`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          API_KEY: this.apiKeyGateway.getApiKey().apiKey
+        },
+        body: JSON.stringify({
+          project_id: projectId,
+          monthly_catchup_id: monthlyCatchUpId
+        })
+      }
+    );
+
+    if (response.ok) {
+      return { successful: true };
+    }
+    return { successful: false };
+  }
 }

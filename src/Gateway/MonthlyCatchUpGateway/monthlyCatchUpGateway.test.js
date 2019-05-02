@@ -365,7 +365,7 @@ describe("MonthlyCatchUpGateway", () => {
         it("Updates the catch up from the API", async () => {
           expect(request.isDone()).toBeTruthy();
         });
-  
+
         it("Returns successful with the monthly catch up", async () => {
           expect(response.successful).toBeTruthy();
         });
@@ -431,7 +431,7 @@ describe("MonthlyCatchUpGateway", () => {
         it("Updates the catch up from the API", async () => {
           expect(request.isDone()).toBeTruthy();
         });
-  
+
         it("Returns successful with the monthly catch up", async () => {
           expect(response.successful).toBeTruthy();
         });
@@ -456,6 +456,136 @@ describe("MonthlyCatchUpGateway", () => {
             projectId: 101,
             monthlyCatchUpId: 99,
             data: { dog: "woof" }
+          });
+
+          expect(response.successful).toBeFalsy();
+        });
+      });
+    });
+  });
+
+  describe("#Submit", () => {
+    describe("Example one", () => {
+      beforeEach(async () => {
+        process.env.REACT_APP_HIF_API_URL = "https://meow.cat/";
+        apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "meowKey" }) };
+
+        simulator = new MonthlyCatchUpApiSimulator({
+          baseUrl: "https://meow.cat",
+          apiKey: "meowKey"
+        });
+      });
+
+      describe("Given it is successful", () => {
+        beforeEach(async () => {
+          request = simulator
+            .submitMonthlyCatchUp({
+              projectId: 10,
+              monthlyCatchUpId: 4,
+              response: {}
+            })
+            .successfully();
+
+          gateway = new MonthlyCatchUpGateway({
+            apiKeyGateway: apiKeyGatewayStub
+          });
+
+          response = await gateway.submit({
+            projectId: 10,
+            monthlyCatchUpId: 4
+          });
+        });
+
+        it("Submits a monthly catchup to the API", async () => {
+          expect(request.isDone()).toBeTruthy();
+        });
+
+        it("Returns successful with the monthly catch up", async () => {
+          expect(response.successful).toBeTruthy();
+        });
+      });
+
+      describe("Given it is unsuccessful", () => {
+        it("Returns unsuccessful", async () => {
+          simulator
+            .submitMonthlyCatchUp({
+              projectId: 10,
+              monthlyCatchUpId: 4,
+              response: {}
+            })
+            .unsuccessfully();
+
+          gateway = new MonthlyCatchUpGateway({
+            apiKeyGateway: apiKeyGatewayStub
+          });
+
+          response = await gateway.submit({
+            projectId: 10,
+            monthlyCatchUpId: 4
+          });
+
+          expect(response.successful).toBeFalsy();
+        });
+      });
+    });
+
+    describe("Example two", () => {
+      beforeEach(async () => {
+        process.env.REACT_APP_HIF_API_URL = "https://baaa.sheep/";
+        apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "baaaKey" }) };
+
+        simulator = new MonthlyCatchUpApiSimulator({
+          baseUrl: "https://baaa.sheep",
+          apiKey: "baaaKey"
+        });
+      });
+
+      describe("Given it is successful", () => {
+        beforeEach(async () => {
+          request = simulator
+            .submitMonthlyCatchUp({
+              projectId: 22,
+              monthlyCatchUpId: 18,
+              response: {}
+            })
+            .successfully();
+
+          gateway = new MonthlyCatchUpGateway({
+            apiKeyGateway: apiKeyGatewayStub
+          });
+
+          response = await gateway.submit({
+            projectId: 22,
+            monthlyCatchUpId: 18
+          });
+        });
+
+        it("Submits a monthly catchup to the API", async () => {
+          expect(request.isDone()).toBeTruthy();
+        });
+
+        it("Returns successful with the monthly catch up", async () => {
+          expect(response.successful).toBeTruthy();
+        });
+      });
+
+      describe("Given it is unsuccessful", () => {
+        it("Returns unsuccessful", async () => {
+          simulator
+            .submitMonthlyCatchUp({
+              projectId: 22,
+              monthlyCatchUpId: 18,
+              response: {}
+            })
+            .unsuccessfully();
+
+          gateway = new MonthlyCatchUpGateway({
+            apiKeyGateway: apiKeyGatewayStub
+          });
+
+          response = await gateway.submit({
+            projectId: 22,
+            monthlyCatchUpId: 18
           });
 
           expect(response.successful).toBeFalsy();
