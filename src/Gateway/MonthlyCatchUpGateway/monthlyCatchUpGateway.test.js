@@ -1,24 +1,75 @@
 import nock from "nock";
 import MonthlyCatchUpGateway from ".";
 
+class APIResponse {
+  constructor(request, response = {}) {
+    this.request = request;
+    this.response = response;
+  }
+
+  successfully(status = 200) {
+    return this.request.reply(status, this.response);
+  }
+
+  unsuccessfully() {
+    return this.request.reply(500);
+  }
+}
+
+class MonthlyCatchUpApiSimulator {
+  constructor({ baseUrl, apiKey }) {
+    this.baseUrl = baseUrl;
+    this.apiKey = apiKey;
+  }
+
+  createMonthlyCatchUp({ projectId, data, response }) {
+    let request = nock(this.baseUrl)
+      .matchHeader("Content-Type", "application/json")
+      .matchHeader("API_KEY", this.apiKey)
+      .post("/monthly-catch-up/create", {
+        project_id: projectId,
+        data
+      });
+
+    return new APIResponse(request, response);
+  }
+
+  findMonthlyCatchUpById({ projectId, monthlyCatchUpId, response }) {
+    let request = nock(this.baseUrl)
+      .matchHeader("Content-Type", "application/json")
+      .matchHeader("API_KEY", this.apiKey)
+      .get(
+        `/monthly-catch-up/get?id=${projectId}&monthly_catchup_id=${monthlyCatchUpId}`
+      );
+
+    return new APIResponse(request, response);
+  }
+}
+
 describe("MonthlyCatchUpGateway", () => {
-  let apiKeyGatewayStub, request, gateway, response;
+  let apiKeyGatewayStub, request, gateway, response, simulator;
 
   describe("#Create", () => {
     describe("Example one", () => {
+      beforeEach(() => {
+        process.env.REACT_APP_HIF_API_URL = "https://meow.cat/";
+        apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "meowKey" }) };
+
+        simulator = new MonthlyCatchUpApiSimulator({
+          baseUrl: "https://meow.cat",
+          apiKey: "meowKey"
+        });
+      });
+
       describe("Given it is successful", () => {
         beforeEach(async () => {
-          process.env.REACT_APP_HIF_API_URL = "https://meow.cat/";
-          apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "meowKey" }) };
-
-          request = nock("https://meow.cat/")
-            .matchHeader("Content-Type", "application/json")
-            .matchHeader("API_KEY", "meowKey")
-            .post("/monthly-catch-up/create", {
-              project_id: 1,
-              data: { cat: "meow" }
+          request = simulator
+            .createMonthlyCatchUp({
+              projectId: 1,
+              data: { cat: "meow" },
+              response: { id: 10 }
             })
-            .reply(200, { id: 10 });
+            .successfully();
 
           gateway = new MonthlyCatchUpGateway({
             apiKeyGateway: apiKeyGatewayStub
@@ -43,17 +94,9 @@ describe("MonthlyCatchUpGateway", () => {
 
       describe("Given it is unsuccessful", () => {
         it("Returns unsuccessful with the created id", async () => {
-          let apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "meowKey" }) };
-
-          process.env.REACT_APP_HIF_API_URL = "https://meow.cat/";
-          nock("https://meow.cat/")
-            .matchHeader("Content-Type", "application/json")
-            .matchHeader("API_KEY", "meowKey")
-            .post("/monthly-catch-up/create", {
-              project_id: 1,
-              data: { cat: "meow" }
-            })
-            .reply(500);
+          simulator
+            .createMonthlyCatchUp({ projectId: 1, data: { cat: "meow" } })
+            .unsuccessfully();
 
           let gateway = new MonthlyCatchUpGateway({
             apiKeyGateway: apiKeyGatewayStub
@@ -66,21 +109,30 @@ describe("MonthlyCatchUpGateway", () => {
     });
 
     describe("Example two", () => {
+      beforeEach(() => {
+        process.env.REACT_APP_HIF_API_URL = "https://woof.dog/";
+        apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "woofKey" }) };
+
+        simulator = new MonthlyCatchUpApiSimulator({
+          baseUrl: "https://woof.dog/",
+          apiKey: "woofKey"
+        });
+      });
+
       describe("Given it is successful", () => {
         beforeEach(async () => {
-          apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "woofKey" }) };
-          process.env.REACT_APP_HIF_API_URL = "https://woof.dog/";
-          request = nock("https://woof.dog/")
-            .matchHeader("Content-Type", "application/json")
-            .matchHeader("API_KEY", "woofKey")
-            .post("/monthly-catch-up/create", {
-              project_id: 2,
-              data: { dog: "woof" }
+          simulator
+            .createMonthlyCatchUp({
+              projectId: 2,
+              data: { dog: "woof" },
+              response: { id: 11 }
             })
-            .reply(200, { id: 11 });
+            .successfully();
+
           gateway = new MonthlyCatchUpGateway({
             apiKeyGateway: apiKeyGatewayStub
           });
+
           response = await gateway.create(2, { dog: "woof" });
         });
 
@@ -100,17 +152,13 @@ describe("MonthlyCatchUpGateway", () => {
 
       describe("Given it is unsuccessful", () => {
         it("Returns unsuccessful with the created id", async () => {
-          let apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "woofers" }) };
-
-          process.env.REACT_APP_HIF_API_URL = "https://dog.woof/";
-          nock("https://dog.woof/")
-            .matchHeader("Content-Type", "application/json")
-            .matchHeader("API_KEY", "woofers")
-            .post("/monthly-catch-up/create", {
-              project_id: 2,
-              data: { dog: "woof" }
+          simulator
+            .createMonthlyCatchUp({
+              projectId: 2,
+              data: { dog: "woof" },
+              response: { id: 11 }
             })
-            .reply(500);
+            .unsuccessfully();
 
           let gateway = new MonthlyCatchUpGateway({
             apiKeyGateway: apiKeyGatewayStub
@@ -124,20 +172,30 @@ describe("MonthlyCatchUpGateway", () => {
   });
 
   describe("#FindById", () => {
+    beforeEach(() => {
+      process.env.REACT_APP_HIF_API_URL = "https://meow.cat/";
+      apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "meowKey" }) };
+
+      simulator = new MonthlyCatchUpApiSimulator({
+        baseUrl: "https://meow.cat",
+        apiKey: "meowKey"
+      });
+    });
+
     describe("Example one", () => {
       describe("Given a monthly catch up is found", () => {
         beforeEach(async () => {
-          apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "meowKey" }) };
-          process.env.REACT_APP_HIF_API_URL = "https://cat.meow/";
-          request = nock("https://cat.meow/")
-            .matchHeader("Content-Type", "application/json")
-            .matchHeader("API_KEY", "meowKey")
-            .get("/monthly-catch-up/get?id=1&monthly_catchup_id=1")
-            .reply(200, {
-              data: { cat: "meow" },
-              schema: { cate: "meow meow" },
-              status: "Draft"
-            });
+          request = simulator
+            .findMonthlyCatchUpById({
+              projectId: 1,
+              monthlyCatchUpId: 1,
+              response: {
+                data: { cat: "meow" },
+                schema: { cate: "meow meow" },
+                status: "Draft"
+              }
+            })
+            .successfully();
 
           gateway = new MonthlyCatchUpGateway({
             apiKeyGateway: apiKeyGatewayStub
@@ -163,13 +221,12 @@ describe("MonthlyCatchUpGateway", () => {
         });
 
         it("Returns unsuccessful", async () => {
-          apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "meowKey" }) };
-          process.env.REACT_APP_HIF_API_URL = "https://cat.meow/";
-          request = nock("https://cat.meow/")
-            .matchHeader("Content-Type", "application/json")
-            .matchHeader("API_KEY", "meowKey")
-            .get("/monthly-catch-up/get?id=1&monthly_catchup_id=1")
-            .reply(404);
+          request = simulator
+            .findMonthlyCatchUpById({
+              projectId: 1,
+              monthlyCatchUpId: 1
+            })
+            .unsuccessfully();
 
           gateway = new MonthlyCatchUpGateway({
             apiKeyGateway: apiKeyGatewayStub
@@ -188,17 +245,17 @@ describe("MonthlyCatchUpGateway", () => {
     describe("Example two", () => {
       describe("Given a monthly catch up is found", () => {
         beforeEach(async () => {
-          apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "dogs4lyf" }) };
-          process.env.REACT_APP_HIF_API_URL = "https://dog.life/";
-          request = nock("https://dog.life/")
-            .matchHeader("Content-Type", "application/json")
-            .matchHeader("API_KEY", "dogs4lyf")
-            .get("/monthly-catch-up/get?id=5&monthly_catchup_id=7")
-            .reply(200, {
-              data: { dog: "woof" },
-              schema: { dogs: "woof woof" },
-              status: "Submitted"
-            });
+          request = simulator
+            .findMonthlyCatchUpById({
+              projectId: 5,
+              monthlyCatchUpId: 7,
+              response: {
+                data: { dog: "woof" },
+                schema: { dogs: "woof woof" },
+                status: "Submitted"
+              }
+            })
+            .successfully();
 
           gateway = new MonthlyCatchUpGateway({
             apiKeyGateway: apiKeyGatewayStub
@@ -226,13 +283,12 @@ describe("MonthlyCatchUpGateway", () => {
 
       describe("Given a monthly catch up is not found", () => {
         it("Returns unsuccessful", async () => {
-          apiKeyGatewayStub = { getApiKey: () => ({ apiKey: "dogs4lyf" }) };
-          process.env.REACT_APP_HIF_API_URL = "https://dog.life/";
-          request = nock("https://dog.life/")
-            .matchHeader("Content-Type", "application/json")
-            .matchHeader("API_KEY", "dogs4lyf")
-            .get("/monthly-catch-up/get?id=5&monthly_catchup_id=7")
-            .reply(404);
+          request = simulator
+            .findMonthlyCatchUpById({
+              projectId: 5,
+              monthlyCatchUpId: 7
+            })
+            .unsuccessfully();
 
           gateway = new MonthlyCatchUpGateway({
             apiKeyGateway: apiKeyGatewayStub
